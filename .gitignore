@@ -3,3 +3,4 @@
 /vendor/
 /logs/*
 composer.lock
+src/settings.php
