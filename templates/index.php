@@ -34,7 +34,7 @@
             <div class="main_catalog--marks <?php echo $k === 0 ? 'on' : '' ?>">
                 <div class="marks-inline">
                     <?php foreach ($type->marks as $mark) {?>
-                        <a href="<?php echo $hrefPrefix.$type->value.'/'.$mark->value ?>">
+                        <a href="<?php echo $hrefPrefix . $type->value . '/' . $mark->value ?>">
                             <span class="main_catalog--mark">
                                 <?php if ($mark->vin) {?>
                                     <span class="mark-vin" title="Можно искать по VIN"></span>
