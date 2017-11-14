@@ -30,6 +30,7 @@
         "process-timeout" : 0
     },
     "scripts": {
+        "dev": "php -S 10.10.0.64:8080 -t public public/index.php",
         "start": "php -S localhost:8080 -t public public/index.php",
         "test": "phpunit"
     }
