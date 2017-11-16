@@ -28,7 +28,7 @@
 
 # Настройка
 
-- **Укажите в файле src/settings.php ваш API Token**
+- **Укажите в файле [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L11) ваш API Token**
 
 
 # Обновления:
