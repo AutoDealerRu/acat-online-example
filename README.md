@@ -4,7 +4,9 @@
 - **composer**
 - **php** >= 5.5
 
+
 #Запуск
+
 ## Используя composer (один из вариантов): 
 - ```bash php composer.phar start```
 - ```bash composer start```
@@ -22,6 +24,7 @@
 ###Для запуска введите:
 
 ```bash docker-compose up -d``` (понадобятся пакеты ```docker``` и ```docker-compose``` и уточните у систем)
+
 
 #Настройка
 
