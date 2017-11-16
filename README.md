@@ -36,6 +36,6 @@
 ## 14.11.2017
 ### Добавлено:
 - Главная страница с типами и марками
-- Модельный ряд каталога a2d ([список типоы и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
-- Группы каталога a2d ([список типоы и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
+- Модельный ряд каталога a2d ([список типов и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
+- Группы каталога a2d ([список типов и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
 - Конечная страница номеров с изображением (точки, увеличение, уменьшение, движение изображения)
