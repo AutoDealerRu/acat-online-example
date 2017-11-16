@@ -1,8 +1,20 @@
-# Системные требования: 
+# Содержание
+1. [**Системные требования**](https://github.com/AutoDealerRu/acat-online-example#Системные-требования)
+2. [**Настройки**](https://github.com/AutoDealerRu/acat-online-example#Настройки)
+3. [**Запуск**](https://github.com/AutoDealerRu/acat-online-example#Запуск)
+4. [**Обновления**](https://github.com/AutoDealerRu/acat-online-example#Обновления)
+
+
+# Системные требования 
 
 - **apache** >= 2.2
 - **composer**
 - **php** >= 5.5
+
+
+# Настройки
+
+- **Укажите в файле [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L11) ваш API Token**
 
 
 # Запуск
@@ -26,12 +38,7 @@
 ```docker-compose up -d``` (понадобятся пакеты ```docker``` и ```docker-compose``` и уточните у систем)
 
 
-# Настройка
-
-- **Укажите в файле [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L11) ваш API Token**
-
-
-# Обновления:
+# Обновления
 
 ## 14.11.2017
 ### Добавлено:
