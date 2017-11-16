@@ -8,11 +8,11 @@
 # Запуск
 
 ## Используя composer (один из вариантов): 
-- ```bash php composer.phar start```
-- ```bash composer start```
+- ```php composer.phar start```
+- ```composer start```
 
 ## Используя php
-- ```bash php -S localhost:80 -t public public/index.php```
+- ```php -S localhost:80 -t public public/index.php```
 
 ## Используя docker:
 
@@ -23,7 +23,7 @@
 
 ### Для запуска введите:
 
-```bash docker-compose up -d``` (понадобятся пакеты ```docker``` и ```docker-compose``` и уточните у систем)
+```docker-compose up -d``` (понадобятся пакеты ```docker``` и ```docker-compose``` и уточните у систем)
 
 
 # Настройка
