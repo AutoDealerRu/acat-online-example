@@ -266,8 +266,8 @@
 </head>
 <body>
 <?php
-$prevUrl = $prev ? "/{$prev->type}/{$prev->mark}/{$prev->model}/{$prev->short_name}" : null;
-$nextUrl = $next ? "/{$next->type}/{$next->mark}/{$next->model}/{$next->short_name}" : null;
+$prevUrl = $prev ? "/{$hrefPrefix}{$prev->type}/{$prev->mark}/{$prev->model}/{$prev->short_name}" : null;
+$nextUrl = $next ? "/{$hrefPrefix}{$next->type}/{$next->mark}/{$next->model}/{$next->short_name}" : null;
 $title = "{$group->name} {$model->name_with_mark}";
 
 $labels = [];
@@ -301,7 +301,7 @@ foreach ($numbers as $item) {
 
 if (property_exists($group,'coordinates')) {
     foreach ($group->coordinates as $item) {
-        $url = "/{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/{$breadcrumbs[3]->url}/{$item->group_short_name}";
+        $url = "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/{$breadcrumbs[3]->url}/{$item->group_short_name}";
         $labels[] = json_decode(json_encode([
             'url' => $url,
             'index' => $item->name,
@@ -454,7 +454,7 @@ if (property_exists($group,'coordinates')) {
     </div>
 </div>
 
-<table class="table imageArea-related table-search active">
+<table class="table imageArea-related active">
     <thead class="table-head">
         <tr class="table-row bottom-line a2s-numbers_header">
             <td class="table-cell">№</td>
@@ -478,7 +478,7 @@ if (property_exists($group,'coordinates')) {
                         <div class="number-info-params">Автомобиль:<?php echo $model->name_with_mark ?></div>
                         <?php } ?>
                         <?php if ($item->relevance) { ?>
-                        <div class="number-info-params">Актуальность: </div>
+                        <div class="number-info-params">Актуальность: <?php echo substr($item->relevance, 8, 2).'.'.substr($item->relevance, 5, 2).'.'.substr($item->relevance, 0, 4) ?></div>
                         <?php } ?>
                         <?php if ($item->modification) { ?>
                         <div class="number-info-params">Модификации: <?php echo $item->modification ?></div>
