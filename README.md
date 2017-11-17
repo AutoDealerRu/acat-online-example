@@ -47,3 +47,13 @@
 - Модельный ряд каталога a2d ([список типов и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
 - Группы каталога a2d ([список типов и марок](https://github.com/AutoDealerRu/catalog-api-documentation/blob/master/a2d/README.md))
 - Конечная страница номеров с изображением (точки, увеличение, уменьшение, движение изображения)
+
+## 17.11.2017
+### Добавлено:
+- Модельный ряд каталога Nissan | Infinity
+- Модификации каталога Nissan | Infinity
+- Группы Nissan | Infinity
+- Подгруппы Nissan | Infinity
+- Номера (артикулы) каталога Nissan | Infinity
+### Исправлено:
+- Вывод даты актуальности запчасти (в информации по артикулу)
