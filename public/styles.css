@@ -17,3 +17,6 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .list-group .group-next .list-group-next {
     background-image: url("https://212709.selcdn.ru/autocatalog-online/public/images/right-arrow.png");
 }
+.main_catalog li:first {
+    margin-top: 50px;
+}
