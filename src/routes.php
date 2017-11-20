@@ -94,6 +94,203 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     });
 });
 
+$app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
+
+    //models
+    $this->get('', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'renault/models.php', $data);
+    });
+
+    //modifications
+    $this->get('/{model}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'renault/modifications.php', $data);
+    });
+
+    //groups
+    $this->get('/{model}/{modification}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'renault/groups.php', $data);
+    });
+
+    //subgroups
+    $this->get('/{model}/{modification}/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['labels'] = [];
+        $added = [];
+        foreach ($data['unit']->groups as $group) {
+            if ($group->coordinates && is_array($group->coordinates)) {
+                foreach ($group->coordinates as $coordinate) {
+                    $index = $group->name ? $group->name : '';
+                    $coordinateIndex = $coordinate->bottom->x.$coordinate->bottom->y.$coordinate->top->x.$coordinate->top->y;
+                    if (!in_array($coordinateIndex, $added)) {
+                        $added[] = $coordinateIndex;
+                        $data['labels'][] = json_decode(json_encode([
+                            'index' => $index,
+                            'title' => $index,
+                            'bottomX' => $coordinate->bottom->x,
+                            'bottomY' => $coordinate->bottom->y,
+                            'topX' => $coordinate->top->x,
+                            'topY' => $coordinate->top->y
+                        ]));
+                    }
+                }
+            }
+        }
+
+
+        return $this->renderer->render($response, 'renault/subgroups.php', $data);
+    });
+
+    //numbers
+    $this->get('/{model}/{modification}/{group}/{subgroup}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['labels'] = [];
+        $added = [];
+        foreach ($data['positions'] as $position) {
+            if ($position->coordinates && is_array($position->coordinates)) {
+                foreach ($position->coordinates as $coordinate) {
+                    $coordinateIndex = $coordinate->bottom->x.$coordinate->bottom->y.$coordinate->top->x.$coordinate->top->y;
+                    if (!in_array($coordinateIndex, $added)) {
+                        $added[] = $coordinateIndex;
+                        $data['labels'][] = json_decode(json_encode([
+                            'index' => $position->index,
+                            'title' => "{$position->name} ({$position->number})",
+                            'bottomX' => $coordinate->bottom->x,
+                            'bottomY' => $coordinate->bottom->y,
+                            'topX' => $coordinate->top->x,
+                            'topY' => $coordinate->top->y
+                        ]));
+                    }
+                }
+            }
+        }
+
+        $prev = $data['prev'];
+        $next = $data['next'];
+        $data['prevUrl'] = $prev ? "/{$settings->urlBeforeCatalog}{$prev->type}/{$prev->mark}/{$prev->model_short_name}/{$prev->modification_short_name}/{$prev->category_short_name}/{$prev->short_name}" : null;
+        $data['nextUrl'] = $next ? "/{$settings->urlBeforeCatalog}{$next->type}/{$next->mark}/{$next->model_short_name}/{$next->modification_short_name}/{$next->category_short_name}/{$next->short_name}" : null;
+        $data['title'] = $data['breadcrumbs'][6]->name;
+
+        return $this->renderer->render($response, 'renault/numbers.php', $data);
+    });
+
+    //subNumbers
+    $this->get('/{model}/{modification}/{group}/{subgroup}/{subNumber}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['subNumber']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['labels'] = [];
+        $added = [];
+        if ($data['positions'] && is_array($data['positions']) && count($data['positions']) > 0) {
+            foreach ($data['positions'] as $position) {
+                if ($position->coordinates && is_array($position->coordinates)) {
+                    foreach ($position->coordinates as $coordinate) {
+                        $coordinateIndex = $coordinate->bottom->x.$coordinate->bottom->y.$coordinate->top->x.$coordinate->top->y;
+                        if (!in_array($coordinateIndex, $added)) {
+                            $added[] = $coordinateIndex;
+                            $data['labels'][] = json_decode(json_encode([
+                                'index' => $position->index,
+                                'title' => "{$position->name} ({$position->number})",
+                                'bottomX' => $coordinate->bottom->x,
+                                'bottomY' => $coordinate->bottom->y,
+                                'topX' => $coordinate->top->x,
+                                'topY' => $coordinate->top->y
+                            ]));
+                        }
+                    }
+                }
+            }
+        }
+
+        $prev = $data['prev'];
+        $next = $data['next'];
+        $data['prevUrl'] = $prev ? "/{$settings->urlBeforeCatalog}{$prev->type}/{$prev->mark}/{$prev->model_short_name}/{$prev->modification_short_name}/{$prev->category_short_name}/{$prev->short_name}" : null;
+        $data['nextUrl'] = $next ? "/{$settings->urlBeforeCatalog}{$next->type}/{$next->mark}/{$next->model_short_name}/{$next->modification_short_name}/{$next->category_short_name}/{$next->short_name}" : null;
+        $data['title'] = $data['breadcrumbs'][6]->name;
+        unset($data['parent']->breadcrumbs);
+
+        return $this->renderer->render($response, 'renault/subnumbers.php', $data);
+    });
+
+});
+
+$app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}/{mark:MERCEDES_BENZ|SMART|MERCEDES_BENZ_PS}', function () {
+
+    //countries
+    $this->get('', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mercedes/countries.php', $data);
+    });
+
+    //models
+    $this->get('/{country}/{aggregation}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mercedes/models.php', $data);
+    });
+
+    //groups
+    $this->get('/{country}/{aggregation}/{model}/{catalog}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mercedes/groups.php', $data);
+    });
+
+    //numbers
+    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}[/{position}]', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}".($args['position'] ? "/{$args['position']}" : ''));
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mercedes/numbers.php', $data);
+    });
+
+    //sa numbers
+    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}/{sa}/{stroke}[/{position}]', function ($request, $response, $args) {
+        $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}[/{position}]', function ($request, $response, $args) {
+            $settings = Helper::getJSON($this->get('settings')['api']);
+
+            $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}/{$args['sa']}/{$args['stroke']}".($args['position'] ? "/{$args['position']}" : ''));
+            $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+            return $this->renderer->render($response, 'mercedes/numbers.php', $data);
+        });
+    });
+
+});
+
 $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SPECIAL_TECH_NATIVE|SPECIAL_TECH_FOREIGN|AGRICULTURAL_MACHINERY|TRACTOR|ENGINE|MOTORCYCLE}/{mark:GAZ_ENGINE|ANDORIA_ENGINE|AVIA|BALKANCAR_ENGINE|BALKANCAR|BAW|BEARFORD_ENGINE|BEIFANG_BENCHI|BYD|CAMC|CASE|CATERPILLAR|CF_MOTO|CHENGGONG|CHEVROLET|CHEVROLET_SKD|CHRYSLER_ENGINE|CITROEN_SKD|CNHTC_SINOTRUK|CNHTC_SINOTRUK_ARCHIVE|CUMMINS_ENGINE|CUMMINS_ENGINE|DAEWOO|DAEWOO_SKD|DAEWOO_ARCHIVE|DAF|DERWAYS|DETVA|DEUTZ_ENGINE|DONGFENG_ENGINE|DONGFENG|DONGFENG|DOOSAN|EAGLE-WING|FAW_ARCHIVE|FAW|FORD_SKD|FORTSCHRITT|FOTON|FOTON|GEELY|GOLDEN_DRAGON|HAFEI|HANWOO|HBXG|HIDROMEK_ARCHIVE|HIDROMEK|HIGER|HONDA_SKD|HONDA_SKD|HONEY_BEE|IKARUS|IRAN_KHODRO|ISUZU_ENGINE|ISUZU_SKD|IVECO_ENGINE|IVECO|JAC|JAGUAR_SKD|JAWA|JCB|JEEP_SKD|JIANSHE|JMC|KING_LONG|KOMAT\'SU_ENGINE|KOMAT\'SU|LAND_ROVER_SKD|LIFAN|LIUGONG|LOCUST|MACDON|MADARA|MADARA|MAHINDRA|MAN_SKD|MAN|MAZDA_SKD|MECANICA_CEAHLAU|MERCEDES_BENZ_SKD|MERCEDES_BENZ_SKD|METAL-FACH_ARCHIVE|METAL-FACH|MITSUBER|MITSUBISHI_SKD|NEW_HOLLAND|NISSAN_ENGINE|OPEL_SKD|PEUGEOT_SKD|PORSCHE_SKD|RENAULT_SKD|RENAULT|ROVER_SKD|SAAB|SAAB_SKD|SARKANA_ZVAIGZNE|SCANIA_SKD|SDLG|SHAANXI|SHAANXI_FAST_GEAR|SHANTUI|SSANGYONG_SKD|SUBARU_SKD|SUZUKI|SUZUKI_SKD|SUZUKI_SKD|TATA|TATRA|TEREX|THERMO_KING|TIGARBO|TRACOM|VERSATILE|VOLVO|VOLVO|VOLVO_SKD|VOLVO_SKD|XCMG|XIAMEN|YANMAR_ENGINE|YUCHAI_ENGINE|YUTONG_ARCHIVE|YUTONG|ZETOR_ENGINE|ZF|ZONGSHEN|AVTOKRAN|AGRO|AZLK|ALTAJ|AMZ_ENGINE|AMKODOR_ARCHIVE|AMKODOR|ATZ|BARNAULTRANSMASH_ARCHIVE_ENGINE|BARNAULTRANSMASH_ENGINE|BELAZ_ARCHIVE|BELAZ|BELAZ|BELOVEZH_ARCHIVE|BELOVEZH|BELOCERKOVMAZ|BOBRUJSKAGROMASH_ARCHIVE|BOBRUJSKAGROMASH|BOBRUJSKSELMASH|BOGDAN|BRYANSKIJ_ARSENAL_ARCHIVE|BRYANSKIJ_ARSENAL|BRYANSKIJ_ARSENAL|BEHMZ|VAZ_ARCHIVE|VAZ|VGTZ|VSM|VTZ_ARCHIVE_ENGINE|VTZ_ENGINE|VTZ|VEHKS|GAZ_ARCHIVE|GAZ|GAZ_ARCHIVE|GAZ|GAZPROM-KRAN|GAKZ|GEOMASH|GIDROMASH|GOMSELMASH|GOMSELMASH_ARCHIVE|DKZ|DONEHKS|DORMASH|ELAZ|ZAZ_ARCHIVE|ZAZ|ZZGT_ARCHIVE|ZZGT|ZID|ZID|ZIK|ZIL|ZIL_ARCHIVE|ZIL_ARCHIVE|ZIL|ZLATEHKS|ZMZ_ARCHIVE_ENGINE|ZMZ_ENGINE|IZH|IZH|IZH_ARCHIVE|IZHNEFTEMASH|IZHORSKIE_ZAVODY|IMZ|KAVZ|KAZ|KAMAZ_ENGINE|KAMAZ_ARCHIVE|KAMAZ_ARCHIVE|KAMAZ_ARCHIVE_ENGINE|KAMAZ|KAMAZ|KANASH|KZK_ARCHIVE|KZK|KZKT|KLEVER_ARCHIVE|KLEVER|KMZ|KMZ_1_MAYA|KOVROVEC|KRAZ_ARCHIVE|KRAZ|KREDMASH|KEHZ|LAZ|LZA|LIAZ|LIAZ_ARCHIVE|LIDAGROPROMMASH|LIDSELMASH|LTZ|LUAZ|MAZ_ARCHIVE|MAZ|MAZ|MAZ_ARCHIVE|MAZ|MASHTEKHREMONT|MZKM_ARCHIVE|MZKM|MZKT|MMZ|MMZ_ARCHIVE_ENGINE|MMZ_ENGINE|MOAZ|MOAZ|MOAZ_ARCHIVE|MOLDAGROTEKHNIKA|MRMZ|MTZ_ARCHIVE|MTZ|MTM|MTM|NEFAZ_ARCHIVE|NEFAZ_ARCHIVE|NEFAZ|NEFAZ|NEFAZ|NKMZ|OREL-POGRUZCHIK|OSTA|OTZ|PAZ|PAZ_ARCHIVE|PENZADIZELMASH_ENGINE|PROMTRAKTOR|PTZ|RASKAT|RAF|RMZ|ROSTSELMASH_ARCHIVE|ROSTSELMASH|RUSSKAYA_MEKHANIKA|RUSSKAYA_MEKHANIKA_ARCHIVE|SAZ|SALSKSELMASH|SAREHKS|SZAP_ARCHIVE|SZAP|SIBSELMASH|SINERGIYA|SMD_ENGINE|STROJDORMASH|STROMNEFTEMASH|TVEHKS_ARCHIVE|TVEHKS|TEPLOSTAR_ENGINE|TZA|TKZ|TMZ_ARCHIVE_ENGINE|TMZ_ENGINE|TMZ|TONAR_ARCHIVE|TONAR|TORFMASH|UAZ_ARCHIVE|UAZ|UVZ|UVZ_ARCHIVE|UMZ_ARCHIVE_ENGINE|UMZ_ENGINE|UMZ_-2|UMPO|UMPO|UNISIBMASH|URAL|URAL_ARCHIVE|URAL|URALMASH|HZTSSH|HTZ_ARCHIVE|HTZ|CHERVONA_ZIRKA|CHZTS|CHMZ|CHSDM|CHTZ|SHAAZ|EHKSKO|EHKSMASH|EHLTRA_ENGINE|YUMZ|YURMASH|YAMZ_ARCHIVE_ENGINE|YAMZ_ENGINE}', function () {
 
     // модели
@@ -136,22 +333,6 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
         return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
     });
 });
-
-//
-//$app->group('/CARS_NATIVE', function() {
-//    $this->group('/VAZ', function () {
-//        $this->get('', function ($request, $response, $args) {
-//            return $this->renderer->render($response, 'a2d/models.php', $args);
-//        });
-//        $this->get('/{modelId:[0-9]+}', function ($request, $response, $args) {
-//            return $this->renderer->render($response, 'a2d/groups.php', $args);
-//        });
-//        $this->get('/{modelId:[0-9]+}/{groupId:[0-9]+}', function ($request, $response, $args) {
-//            return $this->renderer->render($response, 'a2d/numbers.php', $args);
-//        });
-//    });
-//});
-
 
 
 
