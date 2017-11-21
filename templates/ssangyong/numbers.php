@@ -410,7 +410,7 @@ if (property_exists($number,'positions')) {
     </thead>
     <tbody class="table-body">
     <?php foreach ($number->positions as $index => $item) {
-    $ind = $item->index && strlen($item->index) > 0 ? $item->index : strlen($item->number) > 0 ? $item->number : $item->name;?>
+    $ind = ($item->code && strlen($item->code) > 0) ? $item->code : ((strlen($item->number) > 0) ? $item->number : $item->name) ?>
         <tr class="table-row bottom-line to-image" data-index="<?php echo $ind ?>">
             <td class="table-cell"><?php echo $item->code ?></td>
             <td class="table-cell number-info-cell" data-number-info="<?php echo $index?>">
