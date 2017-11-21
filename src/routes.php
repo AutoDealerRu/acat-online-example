@@ -4,6 +4,15 @@ use Slim\Http\Response;
 
 $app->get('/', function (Request $request, Response $response) {
     $settings = Helper::getJSON($this->get('settings')['api']);
+    if (
+        !property_exists($settings,'token') ||
+        property_exists($settings,'token') && strlen($settings->token) === 0
+    ) {
+        return $this->renderer->render($response, 'index.php', [
+            'hrefPrefix' => $settings->urlBeforeCatalog,
+            'error' => 'Укажите ваш API Token в файле src/settings.php:11'
+        ]);
+    }
     $types = Helper::getData($settings, false);
 
     return $this->renderer->render($response, 'index.php', [

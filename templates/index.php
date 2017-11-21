@@ -17,24 +17,27 @@
     </script>
 </head>
 <body>
-<ul class="main_catalog">
-    <li class="main_catalog--types">
-        <?php foreach ($types as $k => $type) { ?>
-            <div class="main_catalog--type <?php echo $k === 0 ? 'on' : ''?>" data-type="<?php echo $type->value?>">
-                <div class="main_catalog--type_name">
-                    <div class="main_catalog--type_title">
-                        <span><?php echo $type->name?></span>
+<?php if ($error) { ?>
+    <h1 style="color: red;"><?php echo $error ?></h1>
+<?php } else { ?>
+    <ul class="main_catalog">
+        <li class="main_catalog--types">
+            <?php foreach ($types as $k => $type) { ?>
+                <div class="main_catalog--type <?php echo $k === 0 ? 'on' : ''?>" data-type="<?php echo $type->value?>">
+                    <div class="main_catalog--type_name">
+                        <div class="main_catalog--type_title">
+                            <span><?php echo $type->name?></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
-    </li>
-    <li class="main_catalog--marks_all">
-        <?php foreach ($types as $k => $type) { ?>
-            <div class="main_catalog--marks <?php echo $k === 0 ? 'on' : '' ?>">
-                <div class="marks-inline">
-                    <?php foreach ($type->marks as $mark) {?>
-                        <a href="<?php echo $hrefPrefix . $type->value . '/' . $mark->value ?>">
+            <?php } ?>
+        </li>
+        <li class="main_catalog--marks_all">
+            <?php foreach ($types as $k => $type) { ?>
+                <div class="main_catalog--marks <?php echo $k === 0 ? 'on' : '' ?>">
+                    <div class="marks-inline">
+                        <?php foreach ($type->marks as $mark) {?>
+                            <a href="<?php echo $hrefPrefix . $type->value . '/' . $mark->value ?>">
                             <span class="main_catalog--mark">
                                 <?php if ($mark->vin) {?>
                                     <span class="mark-vin" title="Можно искать по VIN"></span>
@@ -47,12 +50,13 @@
                                     <?php echo $mark->engine === true ? ' (двигатель)' : ''; ?>
                                 </div>
                             </span>
-                        </a>
-                    <?php } ?>
+                            </a>
+                        <?php } ?>
+                    </div>
                 </div>
-            </div>
-        <?php } ?>
-    </li>
-</ul>
+            <?php } ?>
+        </li>
+    </ul>
+<?php } ?>
 </body>
 </html>
