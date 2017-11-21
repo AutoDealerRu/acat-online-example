@@ -323,6 +323,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}/{$args['sa']}/{$args['stroke']}".($args['position'] ? "/{$args['position']}" : ''));
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['mainImageUrl'] = $data['image'];
         $data['labels'] = [];
         $added = [];
         foreach ($data['images'] as $item) {
@@ -397,6 +398,87 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
 
         return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
     });
+});
+
+//Abarth | Alfa Romeo | Lancia | Fiat
+$app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', function () {
+
+    // модели
+    $this->get('', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'fiat/models.php', $data);
+    });
+
+    // модели
+    $this->get('/{model}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'fiat/modifications.php', $data);
+    });
+
+    // groups
+    $this->get('/{model}/{modification}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'fiat/groups.php', $data);
+    });
+
+    // subgroups
+    $this->get('/{model}/{modification}/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'fiat/subgroups.php', $data);
+    });
+
+    // numbers
+    $this->get('/{model}/{modification}/{group}/{subgroup}/{variant}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['variant']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['labels'] = [];
+        $added = [];
+        if ($data['numbers'] && is_array($data['numbers'])) {
+            foreach ($data['numbers'] as $item) {
+                if (property_exists($item,'coordinate') && $item->coordinate) {
+                    $coordinateIndex = $item->coordinate->bottom->x.$item->coordinate->bottom->y.$item->coordinate->top->x.$item->coordinate->top->y;
+                    if (!in_array($coordinateIndex, $added)) {
+                        $added[] = $coordinateIndex;
+                        $data['labels'][] = json_decode(json_encode([
+                            'index' => $item->index ? $item->index : ( $item->number ? $item->number : $item->description),
+                            'title' => "{$item->description} ({$item->number})",
+                            'bottomX' => $item->coordinate->bottom->x,
+                            'bottomY' => $item->coordinate->bottom->y,
+                            'topX' => $item->coordinate->top->x,
+                            'topY' => $item->coordinate->top->y
+                        ]));
+                    }
+                }
+            }
+        }
+
+        $prev = $data['previousGroup'];
+        $next = $data['nextGroup'];
+        $data['prevUrl'] = $prev ? "/{$settings->urlBeforeCatalog}{$prev->type}/{$prev->mark}/{$prev->model}/{$prev->modification}/{$prev->unit}/{$prev->subgroup_id}/{$prev->variant}" : null;
+        $data['nextUrl'] = $next ? "/{$settings->urlBeforeCatalog}{$next->type}/{$next->mark}/{$next->model}/{$next->modification}/{$next->unit}/{$next->subgroup_id}/{$next->variant}" : null;
+        $data['title'] = "{$data['breadcrumbs'][5]->name} {$data['description']}";
+
+        return $this->renderer->render($response, 'fiat/numbers.php', $data);
+    });
+
 });
 
 // SSANGYONG
