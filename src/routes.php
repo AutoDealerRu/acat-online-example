@@ -343,7 +343,50 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
     });
 });
 
+// SSANGYONG
+$app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 
+    // модели
+    $this->get('', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'ssangyong/models.php', $data);
+    });
+
+    // группы
+    $this->get('/{modelId}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'ssangyong/groups.php', $data);
+    });
+
+    // номера (артикулы) запчастей
+    $this->get('/{modelId}/{groupId}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'ssangyong/numbers.php', $data);
+    });
+
+    //изображение
+    $this->get('/{modelId}/{groupId}/image', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getImage($settings, "/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}/image");
+        $response->write($data);
+
+        return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
+    });
+});
 
 
 //$app->group('/{type}/{mark}', function() {
