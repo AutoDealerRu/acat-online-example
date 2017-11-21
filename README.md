@@ -14,6 +14,9 @@
 
 # Настройки
 
+- **Установите пакеты используя один из вариантов**
+    - ```php composer.phar install```
+    - ```composer install```
 - **Укажите в файле настроек [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L11) ваш API Token**
 - Если каталог расположен не в корневой директории, а например по адресу **http://example.com/catalog** добавьте в файле настроек [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L13) ```catalog/``` чтобы ссылки работали корректно
 - **Важно!** Если сайт индексируется поисковиками, настройте индексацию каталога так, чтобы избежать блокировки по лимитам (**используя файл robots.txt**)
@@ -26,7 +29,7 @@
 - ```composer start```
 
 ## Используя php
-- ```php -S localhost:80 -t public public/index.php```
+- ```php -S 0.0.0.0:80 -t public public/index.php```
 
 ## Используя docker:
 
@@ -42,6 +45,14 @@
 
 
 # Обновления
+
+## 21.11.2017
+### Добавлено:
+- Вывод ошибки об отсутствии токена 
+- Дополнена инструкция по установке 
+- Дополнен каталог ssangyong 
+### Исправлено:
+- Параметры запуска в файле ```composer.json```
 
 ## 20.11.2017
 ### Добавлено:
