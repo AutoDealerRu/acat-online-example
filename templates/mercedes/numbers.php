@@ -260,14 +260,14 @@
 <body>
 
 <div class="list-group" style='text-align: center; position: relative;'>
-    <?php if ($prev) { ?>
-        <a class="group-prev" href="<?php echo $prevUrl ?>" title="<?php echo $prev->name ?>">
+    <?php if ($prevUrl) { ?>
+        <a class="group-prev" href="<?php echo $prevUrl ?>" title="<?php echo $previousGroup->name ?>">
             <span class="list-group-prev"></span>
         </a>
     <?php } ?>
-    <h1 class="title" style="margin: 0 50px; display: inline-block;"><?php echo $title ?></h1>
-    <?php if ($next) { ?>
-        <a class="group-next" href="<?php echo $nextUrl ?>" title="<?php echo $next->name ?>">
+    <h1 class="title" style="margin: 0 50px; display: inline-block; max-width: 70%;"><?php echo $title ?></h1>
+    <?php if ($nextUrl) { ?>
+        <a class="group-next" href="<?php echo $nextUrl ?>" title="<?php echo $nextGroup->name ?>">
             <span class="list-group-next"></span>
         </a>
     <?php } ?>
