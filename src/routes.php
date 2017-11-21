@@ -89,9 +89,10 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
         else $urlParams = "/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['directory']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['figure']}/{$args['section']}";
         $data = Helper::getData($settings, true, $urlParams);
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
-//        dd2($data);
+
         return $this->renderer->render($response, 'nissan/numbers.php', $data);
     });
+
 });
 
 $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
@@ -273,6 +274,33 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}".($args['position'] ? "/{$args['position']}" : ''));
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['mainImageUrl'] = $data['image'];
+        $data['labels'] = [];
+        $added = [];
+        foreach ($data['images'] as $item) {
+            if (property_exists($item,'current') && $item->current && property_exists($item,'points') && is_array($item->points) && count($item->points) > 0) {
+                foreach ($item->points as $coordinate) {
+                    $coordinateIndex = $coordinate->coordinate->bottom->x.$coordinate->coordinate->bottom->y.$coordinate->coordinate->top->x.$coordinate->coordinate->top->y;
+                    if (!in_array($coordinateIndex, $added)) {
+                        $added[] = $coordinateIndex;
+                        $data['labels'][] = json_decode(json_encode([
+                            'index' => $coordinate->label ? $coordinate->label : '',
+                            'title' => $coordinate->description,
+                            'bottomX' => $coordinate->coordinate->bottom->x,
+                            'bottomY' => $coordinate->coordinate->bottom->y,
+                            'topX' => $coordinate->coordinate->top->x,
+                            'topY' => $coordinate->coordinate->top->y
+                        ]));
+                    }
+                }
+            }
+        }
+
+        $prev = $data['previousGroup'];
+        $next = $data['nextGroup'];
+        $data['prevUrl'] = $prev ? "/{$settings->urlBeforeCatalog}{$prev->type}/{$prev->mark}/{$prev->country}/{$prev->aggregation}/{$prev->model}/{$prev->catalog}/{$prev->group}/{$prev->subgroup}".(property_exists($prev,'sa') ? "/{$prev->sa}/{$prev->stroke}" : '') : null;
+        $data['nextUrl'] = $next ? "/{$settings->urlBeforeCatalog}{$next->type}/{$next->mark}/{$next->country}/{$next->aggregation}/{$next->model}/{$next->catalog}/{$next->group}/{$next->subgroup}".(property_exists($next,'sa') ? "/{$next->sa}/{$next->stroke}" : '') : null;
+        $data['title'] = $data['subgroup']->name;
 
         return $this->renderer->render($response, 'mercedes/numbers.php', $data);
     });
