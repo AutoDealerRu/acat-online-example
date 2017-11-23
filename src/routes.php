@@ -525,3 +525,71 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
         return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
     });
 });
+
+// ETKA
+$app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function () {
+
+    // страны и модели
+    $this->get('[/{country:BR|CA|CN|CZ|E|MEX|RA|RDW|SVW|USA|ZA}]', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $args['country'] = isset($args['country']) ? $args['country'] : 'RDW';
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['models'] = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}")['models'];
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['currentCountry'] = $args['country'];
+
+        return $this->renderer->render($response, 'etka/models.php', $data);
+    });
+
+    // группы и сервисные группы
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'etka/groups.php', $data);
+    });
+
+    // подгруппы
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/group/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'etka/subgroups.php', $data);
+    });
+
+    // сервисные подгруппы
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/service/{$args['service']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'etka/subservices.php', $data);
+    });
+
+    // номера (артикулы) запчастей
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}/{subgroup}/{detail}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/group/{$args['group']}/{$args['subgroup']}/{$args['detail']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'etka/numbers.php', $data);
+    });
+
+    // сервисные номера (артикулы) запчастей
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}/{subservice}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/service/{$args['service']}/{$args['subservice']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'etka/servicenumbers.php', $data);
+    });
+
+});
