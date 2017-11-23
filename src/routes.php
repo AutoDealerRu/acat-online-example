@@ -514,16 +514,6 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 
         return $this->renderer->render($response, 'ssangyong/numbers.php', $data);
     });
-
-    //изображение
-    $this->get('/{modelId}/{groupId}/image', function ($request, $response, $args) {
-        $settings = Helper::getJSON($this->get('settings')['api']);
-
-        $data = Helper::getImage($settings, "/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}/image");
-        $response->write($data);
-
-        return $response->withHeader('Content-Type', FILEINFO_MIME_TYPE);
-    });
 });
 
 // ETKA
@@ -592,4 +582,61 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
         return $this->renderer->render($response, 'etka/servicenumbers.php', $data);
     });
 
+});
+
+// TOYOTA | LEXUS
+$app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
+
+    // страны и модели
+    $this->get('[/{country:EU|JP|GR|US}]', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $args['country'] = isset($args['country']) ? $args['country'] : 'EU';
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['models'] = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}")['models'];
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['currentCountry'] = $args['country'];
+
+        return $this->renderer->render($response, 'toyota/models.php', $data);
+    });
+
+    // комплектации
+    $this->get('/{country}/{catalog_code}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'toyota/complectations.php', $data);
+    });
+
+    // группы
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'toyota/groups.php', $data);
+    });
+
+    // Илюстрация и номера (артикулы) запчастей (первые)
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'toyota/numbers.php', $data);
+    });
+
+    // Илюстрация и номера (артикулы) запчастей
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}/{illustration}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}/{$args['group']}/{$args['illustration']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'toyota/numbers.php', $data);
+    });
 });
