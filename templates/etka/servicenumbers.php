@@ -259,8 +259,8 @@
 </head>
 <body>
 <?php
-$previousGroupUrl = $previousGroup ? "/{$hrefPrefix}{$previousGroup->type}/{$previousGroup->mark}/{$previousGroup->country_short_name}/{$previousGroup->model}/{$previousGroup->year}/{$previousGroup->catalog_code}/{$previousGroup->dir}/{$previousGroup->group_type}/{$previousGroup->group}/{$previousGroup->subservice}" : null;
-$nextGroupUrl = $nextGroup ? "/{$hrefPrefix}{$nextGroup->type}/{$nextGroup->mark}/{$nextGroup->country_short_name}/{$nextGroup->model}/{$nextGroup->year}/{$nextGroup->catalog_code}/{$nextGroup->dir}/{$nextGroup->group_type}/{$nextGroup->group}/{$nextGroup->subservice}" : null;
+$previousGroupUrl = $previousGroup ? "/{$hrefPrefix}{$previousGroup->type}/{$previousGroup->mark}/{$previousGroup->country_short_name}/{$previousGroup->model}/{$previousGroup->year}/{$previousGroup->catalog_code}/{$previousGroup->dir}/{$previousGroup->group_type}/{$previousGroup->service}/{$previousGroup->subservice}" : null;
+$nextGroupUrl = $nextGroup ? "/{$hrefPrefix}{$nextGroup->type}/{$nextGroup->mark}/{$nextGroup->country_short_name}/{$nextGroup->model}/{$nextGroup->year}/{$nextGroup->catalog_code}/{$nextGroup->dir}/{$nextGroup->group_type}/{$nextGroup->service}/{$nextGroup->subservice}" : null;
 $title = $breadcrumbs[6]->name;
 ?>
 
