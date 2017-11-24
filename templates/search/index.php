@@ -37,8 +37,10 @@
     <input class="button button--green" type='submit' value="Найти">
     <input type='hidden' name='redirect' value='1'>
 </form>
-<?php if (count($vins) > 0) { ?>
-    <?php foreach ($vins as $index => $vin) {
+<?php
+if (count($vins) > 0 || count($frames) > 0) {
+    $itemsList = count($vins) > 0 ? $vins : (count($frames) > 0 ? $frames : []);
+    foreach ($itemsList as $index => $vin) {
         switch (property_exists($vin, 'mark')) {
             case (in_array($vin->mark, ['INFINITI', 'NISSAN'])):
                 $countryList = [
@@ -108,11 +110,9 @@
                 $name = "{$vin->mark} {$vin->country_short_name} {$vin->modification_name}";
                 ?><a href="<?php echo $url ?>"><div><span><?php echo $index+1 ?>. </span><?php echo $name ?></div></a><?php
                 break;
-        } ?>
-
-    <?php } ?>
-<?php }
-if (count($marks) > 0) { ?>
+        }
+    }
+} elseif  (count($marks) > 0) { ?>
     <?php foreach ($marks as $ind => $mark) {
         $url = "/{$hrefPrefix}";
         $name = ""; ?>
@@ -127,69 +127,9 @@ if (count($marks) > 0) { ?>
         <a href="<?php echo $url ?>">
             <div><span><?php echo $ind+1 ?>. </span><?php echo $name ?></div>
         </a>
-    <?php } ?>
+    <?php }
+} else { ?>
+    <div>По вашему запросу ничего не найдено</div>
 <?php } ?>
-<?php /*
-
-<div class="pin">
-    <?php if ($types) { ?>
-        <span>По вашему запросу ничего не найдено</span>
-    <?php } ?>
-    <?php if ($types) { ?>
-        <div class="a2d--groups a2d--groups_lvl1">
-            <?php foreach ($types as $type) { ?>
-                <?php if (property_exists($type, 'marks')) { ?>
-                    <div class="a2d--groups_name">
-                        <div class='name <?php echo property_exists($type, "marks") ? "" : "end" ?>'><?php echo $type->name ?></div>
-                        <div class="a2d--groups_lvl2">
-                            <?php foreach ($type->marks as $mark) { ?>
-                                <?php if (property_exists($mark, 'models')) { ?>
-                                    <div class="a2d--groups_name">
-                                        <div class='name <?php echo property_exists($mark, "marks") ? "" : "end" ?>'><?php echo $mark->name ?></div>
-                                        <div class="a2d--groups_lvl3">
-                                            <?php foreach ($mark->models as $model) {
-                                                $url = "/{$hrefPrefix}";
-                                                $name = ""; ?>
-                                                <?php foreach ($model->breadcrumbs as $key2 => $item) {
-                                                    $url .= $item->url;
-                                                    if ($key2 < (count($model->breadcrumbs) - 1)) {
-                                                        $url .= '/';
-                                                    }
-                                                    if ($key2 > 1) {
-                                                        $name .= $item->name . ' ';
-                                                    }
-                                                }
-                                                if (property_exists($model, 'queries')) {
-                                                    $url .= '?';
-                                                    foreach ($model->queries as $key => $value) {
-                                                        $url .= $key . '=' . $value;
-                                                    }
-                                                } ?>
-                                                <div class="a2d--groups_name">
-                                                    <div class="name end">
-                                                        <div>
-                                                            <a href="<?php echo $url ?>"><?php echo "{$name}" ?></a>
-                                                        </div>
-                                                        <div><?php echo $model->property ?></div>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                <?php } ?>
-                            <?php } ?>
-                            <div class="a2d--groups_name">
-                                <div class="name end">
-                                    <a href="<?php echo "/{$hrefPrefix}{$type->value}/{$mark->value}" ?>"><?php echo "{$mark->name}" ?></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-            <?php } ?>
-        </div>
-    <?php } ?>
-</div>
- */?>
 </body>
 </html>
