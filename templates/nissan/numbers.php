@@ -446,14 +446,14 @@ $title = $breadcrumbs[7]->name;
                 <?php }}}
                 break;
             }
-            case 'NUMBER': {?>
+            case 'NUMBER': { ?>
                 <tr class="table-row bottom-line to-image" data-index="<?php echo $number->number ?>">
                     <td class="table-cell"></td>
                     <td class="table-cell"></td>
                     <td class="table-cell"><?php echo $number->number?></td>
                     <td class="table-cell"><?php echo property_exists($number,'description') ? $number->description : 'Неизвестно' ?></td>
                 </tr>
-                <? break;
+                <?php break;
             }
             case 'SECTION': {
                 $url = "/{$hrefPrefix}{$number->type}/{$number->mark}/{$number->country_short_name}/{$number->directory}/{$number->modification}/{$number->group}/{$number->number}"; ?>
@@ -465,16 +465,16 @@ $title = $breadcrumbs[7]->name;
                         <a href="<?php echo $url ?>"><?php echo property_exists($number,'description') ? $number->description : 'Неизвестно'?></a>
                     </td>
                 </tr>
-                <? break;
+                <?php break;
             }
-            case 'UNKNOWN': {?>
+            case 'UNKNOWN': { ?>
                 <tr class="table-row bottom-line to-image" data-index="<?php echo $number->number ? $number->number : $number->description ?>">
                     <td class="table-cell"></td>
                     <td class="table-cell"></td>
                     <td class="table-cell"><?php echo $number->number?></td>
                     <td class="table-cell"><?php echo property_exists($number,'description') ? $number->description : 'Неизвестно' ?></td>
                 </tr>
-                <? break;
+                <?php break;
             }
         }
     }?>
