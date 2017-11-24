@@ -4,8 +4,6 @@
     <meta charset="utf-8"/>
     <title>AcatOnline</title>
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
-    <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <h1 class="title">Основные группы деталей для <?php echo $model->name ?></h1>
