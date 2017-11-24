@@ -481,6 +481,89 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
 
 });
 
+//BMW | Rolls-Royce | Mini
+$app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',function (){
+
+    // series
+    $this->get('', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'bmw/series.php', $data);
+    });
+
+    // models
+    $this->get('/{series}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'bmw/models.php', $data);
+    });
+
+    // groups
+    $this->get('/{series}/{model}/{rule}/{transmission}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        if ($request->getQueryParams()['date']) $data['queryDate'] = $request->getQueryParams()['date'];
+
+        return $this->renderer->render($response, 'bmw/groups.php', $data);
+    });
+
+    // subgroups
+    $this->get('/{series}/{model}/{rule}/{transmission}/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        if ($request->getQueryParams()['date']) $data['queryDate'] = $request->getQueryParams()['date'];
+
+        return $this->renderer->render($response, 'bmw/subgroups.php', $data);
+    });
+
+    // numbers
+    $this->get('/{series}/{model}/{rule}/{transmission}/{group}/{subgroup}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}/{$args['group']}/{$args['subgroup']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['labels'] = [];
+        $added = [];
+        if ($data['numbers'] && is_array($data['numbers'])) {
+            foreach ($data['numbers'] as $item) {
+                if (property_exists($item,'coordinate') && $item->coordinate) {
+                    $coordinateIndex = $item->coordinate->bottom->x.$item->coordinate->bottom->y.$item->coordinate->top->x.$item->coordinate->top->y;
+                    if (!in_array($coordinateIndex, $added)) {
+                        $added[] = $coordinateIndex;
+                        $data['labels'][] = json_decode(json_encode([
+                            'index' => strlen($item->group_number) > 0 ? $item->group_number : strlen($item->number) > 0 ? $item->number : $item->full_name,
+                            'title' => "{$item->full_name} ({$item->number})",
+                            'bottomX' => $item->coordinate->bottom->x,
+                            'bottomY' => $item->coordinate->bottom->y,
+                            'topX' => $item->coordinate->top->x,
+                            'topY' => $item->coordinate->top->y
+                        ]));
+                    }
+                }
+            }
+        }
+
+        $prev = $data['previousGroups'];
+        $next = $data['nextGroup'];
+        $data['prevUrl'] = $prev ? "/{$settings->urlBeforeCatalog}{$prev->type}/{$prev->mark}/{$prev->series}/{$prev->model}/{$prev->rule}/{$prev->transmission}/{$prev->group}/{$prev->short_name}".($request->getQueryParams()['date'] ? "?date={$request->getQueryParams()['date']}" : '') : null;
+        $data['nextUrl'] = $next ? "/{$settings->urlBeforeCatalog}{$next->type}/{$next->mark}/{$next->series}/{$next->model}/{$next->rule}/{$next->transmission}/{$next->group}/{$next->short_name}".($request->getQueryParams()['date'] ? "?date={$request->getQueryParams()['date']}" : '') : null;
+        $data['title'] = $data['breadcrumbs'][6]->name;
+
+        return $this->renderer->render($response, 'bmw/numbers.php', $data);
+    });
+
+});
+
 // SSANGYONG
 $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 
