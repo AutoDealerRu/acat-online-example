@@ -1,6 +1,4 @@
 <?php
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -24,7 +22,7 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 // Поиск
-$app->get('/search', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
+$app->get('/search', function (Request $request, Response $response, array $args) {
     $settings = Helper::getJSON($this->get('settings')['api']);
 
     $data = Helper::getData($settings, true,"/search?text={$request->getQueryParams()['text']}");
@@ -34,14 +32,14 @@ $app->get('/search', function (ServerRequestInterface $request, ResponseInterfac
     return $this->renderer->render($response, 'search/index.php', $data);
 });
 
-$app->get('/{type}', function ($request, $response, $args) {
+$app->get('/{type}', function (Request $request, Response $response, array $args) {
     return $response->withRedirect('/', 301);
 });
 
 // Infiniti | Nissan
 $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     // страны и модели
-    $this->get('[/{country:EL|ER|AR|GL|GR|CA|US|JP}]', function ($request, $response, $args) {
+    $this->get('[/{country:EL|ER|AR|GL|GR|CA|US|JP}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $args['country'] = isset($args['country']) ? $args['country'] : 'EL';
 
@@ -54,7 +52,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     });
 
     // модификации
-    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}', function ($request, $response, $args) {
+    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['directory']}");
@@ -64,7 +62,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     });
 
     // группы
-    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}', function ($request, $response, $args) {
+    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['directory']}/{$args['modification']}");
@@ -93,7 +91,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     });
 
     // подгруппы
-    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}/{group}', function ($request, $response, $args) {
+    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['directory']}/{$args['modification']}/{$args['group']}");
@@ -103,7 +101,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
     });
 
     // номера (артикулы) запчастей
-    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}/{group}/{subgroup}[/{figure}/{section}]', function ($request, $response, $args) {
+    $this->get('/{country:EL|ER|AR|GL|GR|CA|US|JP}/{directory:[\d]{3}}/{modification:[\d]+}/{group}/{subgroup}[/{figure}/{section}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         if (!isset($args['figure'])) $urlParams = "/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['directory']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}";
@@ -120,7 +118,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
 $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
 
     //models
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -130,7 +128,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
     });
 
     //modifications
-    $this->get('/{model}', function ($request, $response, $args) {
+    $this->get('/{model}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}");
@@ -140,7 +138,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
     });
 
     //groups
-    $this->get('/{model}/{modification}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}");
@@ -150,7 +148,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
     });
 
     //subgroups
-    $this->get('/{model}/{modification}/{group}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}");
@@ -182,7 +180,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
     });
 
     //numbers
-    $this->get('/{model}/{modification}/{group}/{subgroup}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}/{group}/{subgroup}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}");
@@ -218,7 +216,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
     });
 
     //subNumbers
-    $this->get('/{model}/{modification}/{group}/{subgroup}/{subNumber}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}/{group}/{subgroup}/{subNumber}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['subNumber']}");
@@ -262,7 +260,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
 $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}/{mark:MERCEDES_BENZ|SMART|MERCEDES_BENZ_PS}', function () {
 
     //countries
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -272,7 +270,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
     });
 
     //models
-    $this->get('/{country}/{aggregation}', function ($request, $response, $args) {
+    $this->get('/{country}/{aggregation}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}");
@@ -282,7 +280,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
     });
 
     //groups
-    $this->get('/{country}/{aggregation}/{model}/{catalog}', function ($request, $response, $args) {
+    $this->get('/{country}/{aggregation}/{model}/{catalog}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}");
@@ -292,7 +290,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
     });
 
     //numbers
-    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}[/{position}]', function ($request, $response, $args) {
+    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}[/{position}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}".($args['position'] ? "/{$args['position']}" : ''));
@@ -329,7 +327,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
     });
 
     //sa numbers
-    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}/{sa}/{stroke}[/{position}]', function ($request, $response, $args) {
+    $this->get('/{country}/{aggregation}/{model}/{catalog}/{group}/{subgroup}/{sa}/{stroke}[/{position}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['aggregation']}/{$args['model']}/{$args['catalog']}/{$args['group']}/{$args['subgroup']}/{$args['sa']}/{$args['stroke']}".($args['position'] ? "/{$args['position']}" : ''));
@@ -371,7 +369,7 @@ $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}
 $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SPECIAL_TECH_NATIVE|SPECIAL_TECH_FOREIGN|AGRICULTURAL_MACHINERY|TRACTOR|ENGINE|MOTORCYCLE}/{mark:GAZ_ENGINE|ANDORIA_ENGINE|AVIA|BALKANCAR_ENGINE|BALKANCAR|BAW|BEARFORD_ENGINE|BEIFANG_BENCHI|BYD|CAMC|CASE|CATERPILLAR|CF_MOTO|CHENGGONG|CHEVROLET|CHEVROLET_SKD|CHRYSLER_ENGINE|CITROEN_SKD|CNHTC_SINOTRUK|CNHTC_SINOTRUK_ARCHIVE|CUMMINS_ENGINE|CUMMINS_ENGINE|DAEWOO|DAEWOO_SKD|DAEWOO_ARCHIVE|DAF|DERWAYS|DETVA|DEUTZ_ENGINE|DONGFENG_ENGINE|DONGFENG|DONGFENG|DOOSAN|EAGLE-WING|FAW_ARCHIVE|FAW|FORD_SKD|FORTSCHRITT|FOTON|FOTON|GEELY|GOLDEN_DRAGON|HAFEI|HANWOO|HBXG|HIDROMEK_ARCHIVE|HIDROMEK|HIGER|HONDA_SKD|HONDA_SKD|HONEY_BEE|IKARUS|IRAN_KHODRO|ISUZU_ENGINE|ISUZU_SKD|IVECO_ENGINE|IVECO|JAC|JAGUAR_SKD|JAWA|JCB|JEEP_SKD|JIANSHE|JMC|KING_LONG|KOMAT\'SU_ENGINE|KOMAT\'SU|LAND_ROVER_SKD|LIFAN|LIUGONG|LOCUST|MACDON|MADARA|MADARA|MAHINDRA|MAN_SKD|MAN|MAZDA_SKD|MECANICA_CEAHLAU|MERCEDES_BENZ_SKD|MERCEDES_BENZ_SKD|METAL-FACH_ARCHIVE|METAL-FACH|MITSUBER|MITSUBISHI_SKD|NEW_HOLLAND|NISSAN_ENGINE|OPEL_SKD|PEUGEOT_SKD|PORSCHE_SKD|RENAULT_SKD|RENAULT|ROVER_SKD|SAAB|SAAB_SKD|SARKANA_ZVAIGZNE|SCANIA_SKD|SDLG|SHAANXI|SHAANXI_FAST_GEAR|SHANTUI|SSANGYONG_SKD|SUBARU_SKD|SUZUKI|SUZUKI_SKD|SUZUKI_SKD|TATA|TATRA|TEREX|THERMO_KING|TIGARBO|TRACOM|VERSATILE|VOLVO|VOLVO|VOLVO_SKD|VOLVO_SKD|XCMG|XIAMEN|YANMAR_ENGINE|YUCHAI_ENGINE|YUTONG_ARCHIVE|YUTONG|ZETOR_ENGINE|ZF|ZONGSHEN|AVTOKRAN|AGRO|AZLK|ALTAJ|AMZ_ENGINE|AMKODOR_ARCHIVE|AMKODOR|ATZ|BARNAULTRANSMASH_ARCHIVE_ENGINE|BARNAULTRANSMASH_ENGINE|BELAZ_ARCHIVE|BELAZ|BELAZ|BELOVEZH_ARCHIVE|BELOVEZH|BELOCERKOVMAZ|BOBRUJSKAGROMASH_ARCHIVE|BOBRUJSKAGROMASH|BOBRUJSKSELMASH|BOGDAN|BRYANSKIJ_ARSENAL_ARCHIVE|BRYANSKIJ_ARSENAL|BRYANSKIJ_ARSENAL|BEHMZ|VAZ_ARCHIVE|VAZ|VGTZ|VSM|VTZ_ARCHIVE_ENGINE|VTZ_ENGINE|VTZ|VEHKS|GAZ_ARCHIVE|GAZ|GAZ_ARCHIVE|GAZ|GAZPROM-KRAN|GAKZ|GEOMASH|GIDROMASH|GOMSELMASH|GOMSELMASH_ARCHIVE|DKZ|DONEHKS|DORMASH|ELAZ|ZAZ_ARCHIVE|ZAZ|ZZGT_ARCHIVE|ZZGT|ZID|ZID|ZIK|ZIL|ZIL_ARCHIVE|ZIL_ARCHIVE|ZIL|ZLATEHKS|ZMZ_ARCHIVE_ENGINE|ZMZ_ENGINE|IZH|IZH|IZH_ARCHIVE|IZHNEFTEMASH|IZHORSKIE_ZAVODY|IMZ|KAVZ|KAZ|KAMAZ_ENGINE|KAMAZ_ARCHIVE|KAMAZ_ARCHIVE|KAMAZ_ARCHIVE_ENGINE|KAMAZ|KAMAZ|KANASH|KZK_ARCHIVE|KZK|KZKT|KLEVER_ARCHIVE|KLEVER|KMZ|KMZ_1_MAYA|KOVROVEC|KRAZ_ARCHIVE|KRAZ|KREDMASH|KEHZ|LAZ|LZA|LIAZ|LIAZ_ARCHIVE|LIDAGROPROMMASH|LIDSELMASH|LTZ|LUAZ|MAZ_ARCHIVE|MAZ|MAZ|MAZ_ARCHIVE|MAZ|MASHTEKHREMONT|MZKM_ARCHIVE|MZKM|MZKT|MMZ|MMZ_ARCHIVE_ENGINE|MMZ_ENGINE|MOAZ|MOAZ|MOAZ_ARCHIVE|MOLDAGROTEKHNIKA|MRMZ|MTZ_ARCHIVE|MTZ|MTM|MTM|NEFAZ_ARCHIVE|NEFAZ_ARCHIVE|NEFAZ|NEFAZ|NEFAZ|NKMZ|OREL-POGRUZCHIK|OSTA|OTZ|PAZ|PAZ_ARCHIVE|PENZADIZELMASH_ENGINE|PROMTRAKTOR|PTZ|RASKAT|RAF|RMZ|ROSTSELMASH_ARCHIVE|ROSTSELMASH|RUSSKAYA_MEKHANIKA|RUSSKAYA_MEKHANIKA_ARCHIVE|SAZ|SALSKSELMASH|SAREHKS|SZAP_ARCHIVE|SZAP|SIBSELMASH|SINERGIYA|SMD_ENGINE|STROJDORMASH|STROMNEFTEMASH|TVEHKS_ARCHIVE|TVEHKS|TEPLOSTAR_ENGINE|TZA|TKZ|TMZ_ARCHIVE_ENGINE|TMZ_ENGINE|TMZ|TONAR_ARCHIVE|TONAR|TORFMASH|UAZ_ARCHIVE|UAZ|UVZ|UVZ_ARCHIVE|UMZ_ARCHIVE_ENGINE|UMZ_ENGINE|UMZ_-2|UMPO|UMPO|UNISIBMASH|URAL|URAL_ARCHIVE|URAL|URALMASH|HZTSSH|HTZ_ARCHIVE|HTZ|CHERVONA_ZIRKA|CHZTS|CHMZ|CHSDM|CHTZ|SHAAZ|EHKSKO|EHKSMASH|EHLTRA_ENGINE|YUMZ|YURMASH|YAMZ_ARCHIVE_ENGINE|YAMZ_ENGINE}', function () {
 
     // модели
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -381,7 +379,7 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
     });
 
     // группы
-    $this->get('/{modelId}', function ($request, $response, $args) {
+    $this->get('/{modelId}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}");
@@ -391,7 +389,7 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
     });
 
     // номера (артикулы) запчастей
-    $this->get('/{modelId}/{groupId}', function ($request, $response, $args) {
+    $this->get('/{modelId}/{groupId}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}");
@@ -401,7 +399,7 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
     });
 
     //изображение
-    $this->get('/{modelId}/{groupId}/image', function ($request, $response, $args) {
+    $this->get('/{modelId}/{groupId}/image', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getImage($settings, "/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}/image");
@@ -415,7 +413,7 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
 $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', function () {
 
     // модели
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -425,7 +423,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     });
 
     // модели
-    $this->get('/{model}', function ($request, $response, $args) {
+    $this->get('/{model}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}");
@@ -435,7 +433,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     });
 
     // groups
-    $this->get('/{model}/{modification}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}");
@@ -445,7 +443,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     });
 
     // subgroups
-    $this->get('/{model}/{modification}/{group}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}");
@@ -455,7 +453,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     });
 
     // numbers
-    $this->get('/{model}/{modification}/{group}/{subgroup}/{variant}', function ($request, $response, $args) {
+    $this->get('/{model}/{modification}/{group}/{subgroup}/{variant}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['variant']}");
@@ -496,7 +494,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
 $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',function (){
 
     // series
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -506,7 +504,7 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
     });
 
     // models
-    $this->get('/{series}', function ($request, $response, $args) {
+    $this->get('/{series}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}");
@@ -516,7 +514,7 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
     });
 
     // groups
-    $this->get('/{series}/{model}/{rule}/{transmission}', function ($request, $response, $args) {
+    $this->get('/{series}/{model}/{rule}/{transmission}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}");
@@ -527,7 +525,7 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
     });
 
     // subgroups
-    $this->get('/{series}/{model}/{rule}/{transmission}/{group}', function ($request, $response, $args) {
+    $this->get('/{series}/{model}/{rule}/{transmission}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}/{$args['group']}");
@@ -538,7 +536,7 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
     });
 
     // numbers
-    $this->get('/{series}/{model}/{rule}/{transmission}/{group}/{subgroup}', function ($request, $response, $args) {
+    $this->get('/{series}/{model}/{rule}/{transmission}/{group}/{subgroup}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['series']}/{$args['model']}/{$args['rule']}/{$args['transmission']}/{$args['group']}/{$args['subgroup']}");
@@ -579,7 +577,7 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
 $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 
     // модели
-    $this->get('', function ($request, $response, $args) {
+    $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
@@ -590,7 +588,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
     });
 
     // группы
-    $this->get('/{modelId}', function ($request, $response, $args) {
+    $this->get('/{modelId}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}");
@@ -600,7 +598,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
     });
 
     // номера (артикулы) запчастей
-    $this->get('/{modelId}/{groupId}', function ($request, $response, $args) {
+    $this->get('/{modelId}/{groupId}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['modelId']}/{$args['groupId']}");
@@ -614,7 +612,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function () {
 
     // страны и модели
-    $this->get('[/{country:BR|CA|CN|CZ|E|MEX|RA|RDW|SVW|USA|ZA}]', function ($request, $response, $args) {
+    $this->get('[/{country:BR|CA|CN|CZ|E|MEX|RA|RDW|SVW|USA|ZA}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $args['country'] = isset($args['country']) ? $args['country'] : 'RDW';
 
@@ -627,7 +625,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     });
 
     // группы и сервисные группы
-    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}', function ($request, $response, $args) {
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}");
@@ -637,7 +635,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     });
 
     // подгруппы
-    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}', function ($request, $response, $args) {
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/group/{$args['group']}");
@@ -647,7 +645,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     });
 
     // сервисные подгруппы
-    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}', function ($request, $response, $args) {
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/service/{$args['service']}");
@@ -657,7 +655,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     });
 
     // номера (артикулы) запчастей
-    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}/{subgroup}/{detail}', function ($request, $response, $args) {
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/group/{group}/{subgroup}/{detail}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/group/{$args['group']}/{$args['subgroup']}/{$args['detail']}");
@@ -667,7 +665,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     });
 
     // сервисные номера (артикулы) запчастей
-    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}/{subservice}', function ($request, $response, $args) {
+    $this->get('/{country}/{model}/{year}/{catalog_code}/{dir}/service/{service}/{subservice}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['model']}/{$args['year']}/{$args['catalog_code']}/{$args['dir']}/service/{$args['service']}/{$args['subservice']}");
@@ -682,7 +680,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
 $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
 
     // страны и модели
-    $this->get('[/{country:EU|JP|GR|US}]', function ($request, $response, $args) {
+    $this->get('[/{country:EU|JP|GR|US}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $args['country'] = isset($args['country']) ? $args['country'] : 'EU';
 
@@ -695,7 +693,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
     });
 
     // комплектации
-    $this->get('/{country}/{catalog_code}', function ($request, $response, $args) {
+    $this->get('/{country}/{catalog_code}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}");
@@ -705,7 +703,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
     });
 
     // группы
-    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}', function ($request, $response, $args) {
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}");
@@ -715,7 +713,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
     });
 
     // Илюстрация и номера (артикулы) запчастей (первые)
-    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}', function ($request, $response, $args) {
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}/{$args['group']}");
@@ -725,7 +723,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
     });
 
     // Илюстрация и номера (артикулы) запчастей
-    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}/{illustration}', function ($request, $response, $args) {
+    $this->get('/{country}/{catalog_code}/{model_code}/{sysopt}/{compl_code}/{group}/{illustration}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['catalog_code']}/{$args['model_code']}/{$args['sysopt']}/{$args['compl_code']}/{$args['group']}/{$args['illustration']}");
@@ -739,7 +737,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
 $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', function () {
 
     // страны и семейства
-    $this->get('[/{country}]', function ($request, $response, $args) {
+    $this->get('[/{country}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $args['country'] = isset($args['country']) ? $args['country'] : 'EUR';
 
@@ -752,7 +750,7 @@ $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', functi
     });
 
     // модели
-    $this->get('/{country}/{families}', function ($request, $response, $args) {
+    $this->get('/{country}/{families}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}");
@@ -762,7 +760,7 @@ $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', functi
     });
 
     // модификации
-    $this->get('/{country}/{families}/{model}', function ($request, $response, $args) {
+    $this->get('/{country}/{families}/{model}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}");
@@ -772,7 +770,7 @@ $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', functi
     });
 
     // группы
-    $this->get('/{country}/{families}/{model}/{modification}', function ($request, $response, $args) {
+    $this->get('/{country}/{families}/{model}/{modification}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}");
@@ -782,7 +780,7 @@ $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', functi
     });
 
     // подгруппы
-    $this->get('/{country}/{families}/{model}/{modification}/{group}', function ($request, $response, $args) {
+    $this->get('/{country}/{families}/{model}/{modification}/{group}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}/{$args['group']}");
@@ -792,7 +790,7 @@ $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', functi
     });
 
     // номера (артикулы) запчастей
-    $this->get('/{country}/{families}/{model}/{modification}/{group}/{subgroup}', function ($request, $response, $args) {
+    $this->get('/{country}/{families}/{model}/{modification}/{group}/{subgroup}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}");
