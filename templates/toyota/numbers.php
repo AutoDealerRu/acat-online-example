@@ -437,7 +437,7 @@ foreach ($numbers as $item) {
                                         <div class="number-info-params">Дата пр-ва:
                                             <?php echo substr($subnumber->date_start, 8, 2).'.'.substr($subnumber->date_start, 5, 2).'.'.substr($subnumber->date_start, 0, 4);
                                             if (property_exists($subnumber,'date_end')) echo ' - ';
-                                            if (property_exists($subnumber,'date_end')) echo (!$subnumber->date_end ? 'по н.в.' : substr($subnumber->date_start, 8, 2).'.'.substr($subnumber->date_start, 5, 2).'.'.substr($subnumber->date_start, 0, 4)); ?>
+                                            if (property_exists($subnumber,'date_end')) echo (!$subnumber->date_end ? 'по н.в.' : substr($subnumber->date_end, 8, 2).'.'.substr($subnumber->date_end, 5, 2).'.'.substr($subnumber->date_end, 0, 4)); ?>
                                         </div>
                                     <?php } ?>
                                     <?php if (property_exists($subnumber,'analogs')) { ?>

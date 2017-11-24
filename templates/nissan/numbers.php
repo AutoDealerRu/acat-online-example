@@ -431,7 +431,7 @@ $title = $breadcrumbs[7]->name;
                                                 <div class="number-info-params">Дата пр-ва:
                                                     <?php echo substr($subnumber->from_date, 8, 2).'.'.substr($subnumber->from_date, 5, 2).'.'.substr($subnumber->from_date, 0, 4);
                                                     if (property_exists($subnumber,'to_date')) echo ' - ';
-                                                    if (property_exists($subnumber,'to_date')) echo (!$subnumber->to_date ? 'по н.в.' : substr($subnumber->from_date, 8, 2).'.'.substr($subnumber->from_date, 5, 2).'.'.substr($subnumber->from_date, 0, 4)); ?>
+                                                    if (property_exists($subnumber,'to_date')) echo (!$subnumber->to_date ? 'по н.в.' : substr($subnumber->to_date, 8, 2).'.'.substr($subnumber->to_date, 5, 2).'.'.substr($subnumber->to_date, 0, 4)); ?>
                                                 </div>
                                             <?php } ?>
                                             <?php if (property_exists($subnumber,'applicability')) { ?>

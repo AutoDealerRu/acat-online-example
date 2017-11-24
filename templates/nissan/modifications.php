@@ -27,7 +27,7 @@
                 <?php if ($modification->from_date) {
                     echo substr($modification->from_date, 8, 2).'.'.substr($modification->from_date, 5, 2).'.'.substr($modification->from_date, 0, 4);
                     if (property_exists($modification,'to_date')) echo ' - ';
-                    if (property_exists($modification,'to_date')) echo (!$modification->to_date ? 'по н.в.' : substr($modification->from_date, 8, 2).'.'.substr($modification->from_date, 5, 2).'.'.substr($modification->from_date, 0, 4));
+                    if (property_exists($modification,'to_date')) echo (!$modification->to_date ? 'по н.в.' : substr($modification->to_date, 8, 2).'.'.substr($modification->to_date, 5, 2).'.'.substr($modification->to_date, 0, 4));
                 }?>
             </td>
             <td class="table-cell"><?php echo property_exists($modification,'body') ? (!$modification->body ? ' - ' : $modification->body) : ' - ' ?></td>

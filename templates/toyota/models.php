@@ -32,7 +32,7 @@
             <td class="table-cell"><?php echo $model->modifications ?></td>
             <td class="table-cell">
                 <?php echo substr($model->prod_start, 8, 2).'.'.substr($model->prod_start, 5, 2).'.'.substr($model->prod_start, 0, 4) ?>
-                <?php echo ' - '.(!$model->prod_end ? 'по н.в.' : substr($model->prod_start, 8, 2).'.'.substr($model->prod_start, 5, 2).'.'.substr($model->prod_start, 0, 4)) ?>
+                <?php echo ' - '.(!$model->prod_end ? 'по н.в.' : substr($model->prod_end, 8, 2).'.'.substr($model->prod_end, 5, 2).'.'.substr($model->prod_end, 0, 4)) ?>
             </td>
         </tr>
     <?php } ?>

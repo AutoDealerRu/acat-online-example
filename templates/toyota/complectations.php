@@ -29,7 +29,7 @@
             </td>
             <td class="table-cell">
                 <?php echo substr($item->prod_start, 8, 2).'.'.substr($item->prod_start, 5, 2).'.'.substr($item->prod_start, 0, 4) ?>
-                <?php echo ' - '.(!$item->prod_end ? 'по н.в.' : substr($item->prod_start, 8, 2).'.'.substr($item->prod_start, 5, 2).'.'.substr($item->prod_start, 0, 4)) ?>
+                <?php echo ' - '.(!$item->prod_end ? 'по н.в.' : substr($item->prod_end, 8, 2).'.'.substr($item->prod_end, 5, 2).'.'.substr($item->prod_end, 0, 4)) ?>
             </td>
             <td class="table-cell"><?php echo $item->engine_short_name ?></td>
             <td class="table-cell"><?php echo $item->body_short_name ?></td>

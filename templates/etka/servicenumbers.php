@@ -310,7 +310,7 @@ $title = $breadcrumbs[6]->name;
                                 <div class="number-info-params">Дата пр-ва:
                                     <?php echo substr($item->date_start, 8, 2).'.'.substr($item->date_start, 5, 2).'.'.substr($item->date_start, 0, 4);
                                     if (property_exists($item,'date_end')) echo ' - ';
-                                    if (property_exists($item,'date_end')) echo (!$item->date_end ? 'по н.в.' : substr($item->date_start, 8, 2).'.'.substr($item->date_start, 5, 2).'.'.substr($item->date_start, 0, 4)); ?>
+                                    if (property_exists($item,'date_end')) echo (!$item->date_end ? 'по н.в.' : substr($item->date_end, 8, 2).'.'.substr($item->date_end, 5, 2).'.'.substr($item->date_end, 0, 4)); ?>
                                 </div>
                             <?php } ?>
                             <?php if (property_exists($item,'note')) { ?>

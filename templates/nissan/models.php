@@ -32,7 +32,7 @@
             <td class="table-cell"><?php echo $model->serial ?></td>
             <td class="table-cell">
                 <?php echo substr($model->from_date, 8, 2).'.'.substr($model->from_date, 5, 2).'.'.substr($model->from_date, 0, 4) ?>
-                <?php echo ' - '.(!$model->to_date ? 'по н.в.' : substr($model->from_date, 8, 2).'.'.substr($model->from_date, 5, 2).'.'.substr($model->from_date, 0, 4)) ?>
+                <?php echo ' - '.(!$model->to_date ? 'по н.в.' : substr($model->to_date, 8, 2).'.'.substr($model->to_date, 5, 2).'.'.substr($model->to_date, 0, 4)) ?>
             </td>
         </tr>
     <?php } ?>

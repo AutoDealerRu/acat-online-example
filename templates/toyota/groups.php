@@ -33,7 +33,7 @@
                 <li>Период выпуска: <b>
                     <?php echo substr($complectation->prod_start, 8, 2).'.'.substr($complectation->prod_start, 5, 2).'.'.substr($complectation->prod_start, 0, 4);
                         if (property_exists($complectation,'prod_end')) echo ' - ';
-                        if (property_exists($complectation,'prod_end')) echo (!$complectation->prod_end ? 'по н.в.' : substr($complectation->prod_start, 8, 2).'.'.substr($complectation->prod_start, 5, 2).'.'.substr($complectation->prod_start, 0, 4)); ?>
+                        if (property_exists($complectation,'prod_end')) echo (!$complectation->prod_end ? 'по н.в.' : substr($complectation->prod_end, 8, 2).'.'.substr($complectation->prod_end, 5, 2).'.'.substr($complectation->prod_end, 0, 4)); ?>
                     </b>
                 </li>
             <?php } ?>
