@@ -36,7 +36,7 @@ $app->get('/search', function (Request $request, Response $response, array $args
                 return $response->withRedirect($url, 301);
                 break;
             case (in_array($vin->mark, ['MERCEDES_BENZ', 'SMART', 'MERCEDES_BENZ_PS'])):
-                $url = "/{$vin->type}/{$vin->mark}/{$vin->country_short_name}/{$vin->aggregation}/{$vin->model}/{$vin->catalog}";
+                $url = "/{$vin->type}/{$vin->mark}/{$vin->country}/{$vin->aggregation}/{$vin->model}/{$vin->catalog}";
                 return $response->withRedirect($url, 301);
                 break;
             case (in_array($vin->mark, ['FIAT', 'LANCIA', 'ALFA_ROMEO', 'ABARTH'])):

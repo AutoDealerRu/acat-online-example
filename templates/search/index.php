@@ -32,7 +32,7 @@
             <p>Поиск по VIN/кузову: марки Abarth, Alfa-Romeo, Fiat, Lancia, Audi, Skoda, Seat, Volkswagen, Bmw, Mini, Rolls-Royce, Kia, Hyundai, Nissan, Infinity, Toyota, Lexus</p>
         </div>
     </div>
-    <input class="search_vim" id="search_vim" type='text' name='text' placeholder=' ' value="<?php echo $searchValue ?>">
+    <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' ' value="<?php echo $searchValue ?>">
     <label class="form__label" for='search_vim'>Поиск по VIN, кузову, марке или модели</label>
     <input class="button button--green" type='submit' value="Найти">
     <input type='hidden' name='redirect' value='1'>
@@ -58,8 +58,8 @@ if (count($vins) > 0 || count($frames) > 0) {
                 ?><a href="<?php echo $url ?>"><div><span><?php echo $index+1 ?>. </span><?php echo $name ?></div></a><?php
                 break;
             case (in_array($vin->mark, ['MERCEDES_BENZ', 'SMART', 'MERCEDES_BENZ_PS'])):
-                $url = "/{$hrefPrefix}{$vin->type}/{$vin->mark}/{$vin->country_short_name}/{$vin->aggregation}/{$vin->model}/{$vin->catalog}";
-                $name = "{$vin->mark} {$vin->name} {$vin->modification}";
+                $url = "/{$hrefPrefix}{$vin->type}/{$vin->mark}/{$vin->country}/{$vin->aggregation}/{$vin->model}/{$vin->catalog}";
+                $name = "{$vin->mark} {$vin->modification} {$vin->country} ({$vin->name})";
                 ?><a href="<?php echo $url ?>"><div><span><?php echo $index+1 ?>. </span><?php echo $name ?></div></a><?php
                 break;
             case (in_array($vin->mark, ['FIAT', 'LANCIA', 'ALFA_ROMEO', 'ABARTH'])):
