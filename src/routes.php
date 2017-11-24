@@ -1,4 +1,6 @@
 <?php
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -21,7 +23,16 @@ $app->get('/', function (Request $request, Response $response) {
     ]);
 });
 
-// сюда поиск
+// Поиск
+$app->get('/search', function (ServerRequestInterface $request, ResponseInterface $response, $args) {
+    $settings = Helper::getJSON($this->get('settings')['api']);
+
+    $data = Helper::getData($settings, true,"/search?text={$request->getQueryParams()['text']}");
+    $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+    $data['searchValue'] = $request->getQueryParams()['text'];
+
+    return $this->renderer->render($response, 'search/index.php', $data);
+});
 
 $app->get('/{type}', function ($request, $response, $args) {
     return $response->withRedirect('/', 301);
