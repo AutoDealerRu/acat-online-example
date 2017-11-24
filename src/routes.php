@@ -640,3 +640,70 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
         return $this->renderer->render($response, 'toyota/numbers.php', $data);
     });
 });
+
+// KIA | HYUNDAI
+$app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', function () {
+
+    // страны и семейства
+    $this->get('[/{country}]', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $args['country'] = isset($args['country']) ? $args['country'] : 'EUR';
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['families'] = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}")['families'];
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        $data['currentCountry'] = $args['country'];
+
+        return $this->renderer->render($response, 'kia/families.php', $data);
+    });
+
+    // модели
+    $this->get('/{country}/{families}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'kia/models.php', $data);
+    });
+
+    // модификации
+    $this->get('/{country}/{families}/{model}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'kia/modifications.php', $data);
+    });
+
+    // группы
+    $this->get('/{country}/{families}/{model}/{modification}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'kia/groups.php', $data);
+    });
+
+    // подгруппы
+    $this->get('/{country}/{families}/{model}/{modification}/{group}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}/{$args['group']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'kia/subgroups.php', $data);
+    });
+
+    // номера (артикулы) запчастей
+    $this->get('/{country}/{families}/{model}/{modification}/{group}/{subgroup}', function ($request, $response, $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}/{$args['families']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'kia/numbers.php', $data);
+    });
+});
