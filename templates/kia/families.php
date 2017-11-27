@@ -11,21 +11,30 @@
     </style>
 </head>
 <body>
-<div class="countries">
-    <?php foreach ($countries as $index => $country) { ?>
-        <a class="country <?php echo $country->country_short == $currentCountry ? 'active' : ''?>" href="/<?php echo $hrefPrefix . $country->type . '/' . $country->mark . '/' . $country->country_short ?>">
-            <?php echo $country->full_name ?>
-        </a>
-    <?php } ?>
-</div>
-<div class="block-list">
-    <?php foreach ($families as $item) { ?>
-        <a href="<?php echo "/{$hrefPrefix}{$item->type}/{$item->mark}/{$item->country_short}/{$item->family}"?>">
+
+    <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
+        <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
+        <label class="form__label" for='search_vim'>Поиск по номеру (артикулу) детали</label>
+        <input class="button button--green" type='submit' value="Найти">
+    </form>
+
+    <div class="countries">
+        <?php foreach ($countries as $index => $country) { ?>
+            <a class="country <?php echo $country->country_short == $currentCountry ? 'active' : ''?>" href="/<?php echo $hrefPrefix . $country->type . '/' . $country->mark . '/' . $country->country_short ?>">
+                <?php echo $country->full_name ?>
+            </a>
+        <?php } ?>
+    </div>
+
+    <div class="block-list">
+        <?php foreach ($families as $item) { ?>
+            <a href="<?php echo "/{$hrefPrefix}{$item->type}/{$item->mark}/{$item->country_short}/{$item->family}"?>">
                 <span class="list-item">
                     <span><?php echo $item->family ?></span>
                 </span>
-        </a>
-    <?php } ?>
-</div>
+            </a>
+        <?php } ?>
+    </div>
+
 </body>
 </html>

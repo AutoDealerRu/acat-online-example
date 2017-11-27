@@ -6,6 +6,13 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+
+<form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
+    <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
+    <label class="form__label" for='search_vim'>Поиск по номеру (артикулу) детали</label>
+    <input class="button button--green" type='submit' value="Найти">
+</form>
+
 <?php foreach ($models as $k => $model) { ?>
     <a href="<?php echo "/{$hrefPrefix}{$model->type}/{$model->brand_short_name}/{$model->short_name}" ?>">
         <span class="catalog--mark drop-down">

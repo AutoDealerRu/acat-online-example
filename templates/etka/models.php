@@ -40,6 +40,13 @@
     </script>
 </head>
 <body>
+
+    <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
+        <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
+        <label class="form__label" for='search_vim'>Поиск по номеру (артикулу) детали</label>
+        <input class="button button--green" type='submit' value="Найти">
+    </form>
+
     <div class="countries">
         <?php foreach ($countries as $country) { ?>
             <a class="country <?php echo $country->country_short_name == $currentCountry ? 'active' : ''?>" href="/<?php echo $hrefPrefix . $country->type . '/' . $country->mark . '/' . $country->country_short_name ?>">
