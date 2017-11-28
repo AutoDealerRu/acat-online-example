@@ -38,13 +38,13 @@
                     <?php } else {?>
                         <span class="a2d--groups_name">
                             <span class="name">
-                                <span><?php echo $group->name.($subgroup->codes ? ' (Коды: '.implode(',', $subgroup->codes).')' : '') ?></span>
+                                <span><?php echo $subgroup->name.($subgroup->codes ? ' (Коды: '.implode(',', $subgroup->codes).')' : '') ?></span>
                                 <span class="beforePlus">+</span>
                                 <span class="beforeMinus">-</span>
                             </span>
                             <span class="a2d--groups_lvl3">
                                 <?php foreach ($subgroup->items as $stroke) {?>
-                                    <a href="<?php echo "/{$hrefPrefix}{$group->type}/{$group->mark}/{$group->country}/{$group->aggregation}/{$group->model}/{$group->group}/{$group->catalog}/{$group->short}/{$stroke->subgroup_id}/{$subgroup->short}/{$stroke->stroke_id}" ?>">
+                                    <a href="<?php echo "/{$hrefPrefix}{$group->type}/{$group->mark}/{$group->country}/{$group->aggregation}/{$group->model}/{$group->catalog}/{$group->short}/{$stroke->subgroup_id}/{$subgroup->short}/{$stroke->stroke_id}" ?>">
                                         <span class="name end"><?php echo $stroke->description ?></span>
                                     </a>
                                 <?php } ?>

@@ -74,7 +74,7 @@ $app->get('/{type}', function (Request $request, Response $response, array $args
 // Infiniti | Nissan
 $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -163,7 +163,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
 // Renault | Dacia
 $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -316,6 +316,17 @@ $app->group('/{type:CARS_FOREIGN}/{mark:RENAULT|DACIA}', function () {
 //Mercedes | Smart
 $app->group('/{type:CARS_FOREIGN|BUS|SPECIAL_TECH_FOREIGN|ENGINE|TRUCKS_FOREIGN}/{mark:MERCEDES_BENZ|SMART|MERCEDES_BENZ_PS}', function () {
 
+    // поиск но номеру(артикулу)
+    $this->get('/search', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $search = $request->getQueryParam('number');
+        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
+        $data['searchNumber'] = $search;
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mercedes/search.php', $data);
+    });
+    
     //countries
     $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
@@ -479,7 +490,7 @@ $app->group('/{type:CARS_FOREIGN|CARS_NATIVE|TRUCKS_NATIVE|TRUCKS_FOREIGN|BUS|SP
 //Abarth | Alfa Romeo | Lancia | Fiat
 $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -570,7 +581,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
 //BMW | Rolls-Royce | Mini
 $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',function (){
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -663,6 +674,16 @@ $app->group('/{type:CARS_FOREIGN|MOTORCYCLE}/{mark:BMW|ROLLS-ROYCE|MINI}',functi
 // SSANGYONG
 $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 
+    // поиск но номеру(артикулу)
+    $this->get('/search', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+//        $search = $request->getQueryParam('number');
+//        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'ssangyong/search.php', $data);
+    });
+    
     // модели
     $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
@@ -698,7 +719,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
 // ETKA
 $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -776,7 +797,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
 // TOYOTA | LEXUS
 $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
@@ -845,7 +866,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:TOYOTA|LEXUS}', function () {
 // KIA | HYUNDAI
 $app->group('/{type:BUS|CARS_FOREIGN|TRUCKS_FOREIGN}/{mark:KIA|HYUNDAI}', function () {
 
-    // поиск но номеру(артикулу) или названию детали
+    // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
