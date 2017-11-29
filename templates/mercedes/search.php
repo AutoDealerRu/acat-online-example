@@ -24,8 +24,8 @@
             </td>
             <td class="table-cell"><?php echo $number->name ?></td>
             <td class="table-cell">
-                <p><?php echo "{$number->model_name} ({$number->country_name}/{$number->aggregation_name}) -> {$number->group_name} -> {$number->group_name} -> {$number->subgroup_name}" ?></p>
-                <p>Описание: <?php echo $number->description ?></p>
+                <p><?php echo "{$number->model_name} ({$number->country_name}/{$number->aggregation_name}) -> {$number->group_name} -> {$number->subgroup_name}" ?></p>
+                <?php if (property_exists($number,'description')) {?><p>Описание: <?php echo $number->description ?></p><?php } ?>
             </td>
         </tr>
     <?php } ?>
