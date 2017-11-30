@@ -270,21 +270,17 @@ $prevUrl = $prev ? "/{$hrefPrefix}{$prev->type}/{$prev->mark}/{$prev->model}/{$p
 $nextUrl = $next ? "/{$hrefPrefix}{$next->type}/{$next->mark}/{$next->model}/{$next->short_name}" : null;
 $title = "{$breadcrumbs[4]->name}";
 
-$labels = [];
-$addedLabels = [];
-if (property_exists($number,'positions')) {
-    foreach ($number->positions as $item) {
-        $url = "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/{$breadcrumbs[3]->url}/{$item->group_short_name}";
-        foreach ($item->coordinates as $coordinate) {
-            $labels[] = json_decode(json_encode([
-                'index' => $item->code,
-                'title' => $item->name . '(' . $item->number  . ')',
-                'bottomX' => $coordinate->bottom->x,
-                'bottomY' => $coordinate->bottom->y,
-                'topX' => $coordinate->top->x,
-                'topY' => $coordinate->top->y
-            ]));
-        }
+$imageLabels = [];
+if ($labels) {
+    foreach ($labels as $item) {
+        $imageLabels[] = json_decode(json_encode([
+            'index' => $item->index,
+            'title' => $item->title,
+            'bottomX' => $item->bottom->x,
+            'bottomY' => $item->bottom->y,
+            'topX' => $item->top->x,
+            'topY' => $item->top->y
+        ]));
     }
 }
 ?>
@@ -375,8 +371,8 @@ if (property_exists($number,'positions')) {
                 <span class="imageLayout" id="imageLayout">
 
                     <img src="<?php echo $image ?>">
-                    <?php if (count($labels) > 0) { ?>
-                        <?php foreach ($labels as $coordinate) { ?>
+                    <?php if (count($imageLabels) > 0) { ?>
+                        <?php foreach ($imageLabels as $coordinate) { ?>
                             <span class="ladel"
                                   data-left="<?php echo $coordinate->topX ?>"
                                   data-top="<?php echo $coordinate->topY ?>"
@@ -409,7 +405,7 @@ if (property_exists($number,'positions')) {
         </tr>
     </thead>
     <tbody class="table-body">
-    <?php foreach ($number->positions as $index => $item) {
+    <?php foreach ($numbers as $index => $item) {
     $ind = ($item->code && strlen($item->code) > 0) ? $item->code : ((strlen($item->number) > 0) ? $item->number : $item->name) ?>
         <tr class="table-row bottom-line to-image" data-index="<?php echo $ind ?>">
             <td class="table-cell"><?php echo $item->code ?></td>
