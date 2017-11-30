@@ -20,3 +20,7 @@ html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-t
 .main_catalog li:first {
     margin-top: 50px;
 }
+
+/*Start pretty site*/
+body {margin: 30px;}
+/*End pretty site*/
