@@ -677,8 +677,8 @@ $app->group('/{type:CARS_FOREIGN}/{mark:SSANGYONG}', function () {
     // поиск но номеру(артикулу)
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
-//        $search = $request->getQueryParam('number');
-//        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
+        $search = $request->getQueryParam('number');
+        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
         return $this->renderer->render($response, 'ssangyong/search.php', $data);
