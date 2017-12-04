@@ -544,7 +544,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     $this->get('/{model}/{modification}/{group}/{subgroup}/{variant}', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
 
-        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/{$args['subgroup']}/{$args['variant']}");
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['model']}/{$args['modification']}/{$args['group']}/". urlencode($args['subgroup']) . "/{$args['variant']}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
         $data['labels'] = [];
         $added = [];

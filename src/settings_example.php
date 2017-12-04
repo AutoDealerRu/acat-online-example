@@ -8,7 +8,7 @@ return [
         ],
         'api' => [
             'host' => 'https://acat.online/api',   // Адрес АПИ сервиса
-            'token' => '',                          // УКАЖИТЕ ВАШ ТОКЕН ВНУТРИ КОВЫЧЕК
+            'token' => '3f473bd763293ce83de8b8277daa4002',                          // УКАЖИТЕ ВАШ ТОКЕН ВНУТРИ КОВЫЧЕК
             // Если каталог доступен например с "http://MouCauT.com/catalogs" то в ковычках будет 'catalogs'
             'urlBeforeCatalog' => ''
         ],
