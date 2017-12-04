@@ -17,7 +17,10 @@
 - **Установите пакеты используя один из вариантов**
     - ```php composer.phar install```
     - ```composer install```
-- **Укажите в файле настроек [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L11) ваш API Token**
+- **Выполните  1 из вариантов** (создание файла с настройками)
+    - через командную строку ```cp src/settings_example.php src/settings.php```
+    - в ручную скопируте файл в папке ```src``` с именем ```settings_example.php``` в эту же папку и переименуйте в ```settings.php```
+- **Укажите в файле настроек ```src/settings.php``` в 11 строке ваш API Token**
 - Если каталог расположен не в корневой директории, а например по адресу **http://example.com/catalog** добавьте в файле настроек [src/settings.php](https://github.com/AutoDealerRu/acat-online-example/blob/master/src/settings.php#L13) ```catalog/``` чтобы ссылки работали корректно
 - **Важно!** Если сайт индексируется поисковиками, настройте индексацию каталога так, чтобы избежать блокировки по лимитам (**используя файл robots.txt**)
 
