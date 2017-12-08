@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /
+
+User-agent: Yandex
+Disallow: /
+
+User-agent: Google
+Disallow: /
+
+User-agent: Mail
+Disallow: /
