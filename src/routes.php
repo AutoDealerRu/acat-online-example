@@ -732,7 +732,15 @@ $app->group('/{type:CARS_FOREIGN}/{mark:AUDI|SEAT|SKODA|VOLKSWAGEN}', function (
     // страны и модели
     $this->get('[/{country:BR|CA|CN|CZ|E|MEX|RA|RDW|SVW|USA|ZA}]', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
-        $args['country'] = isset($args['country']) ? $args['country'] : 'RDW';
+        if (!empty($args['country'])) {
+            $args['country'] = $args['country'];
+        } elseif ($args['mark'] == 'SKODA') {
+            $args['country'] = 'SVW';
+        } elseif ($args['mark'] == 'SEAT') {
+            $args['country'] = 'E';
+        } else {
+            $args['country'] = 'RDW';
+        };
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
         $data['models'] = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}/{$args['country']}")['models'];
