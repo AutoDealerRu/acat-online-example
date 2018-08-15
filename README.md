@@ -49,6 +49,75 @@
 
 # Обновления
 
+## 15.08.2018
+### 17 новых марок каталога a2d
+- KAROSA
+- LONKING
+- PENGPU
+- AOMZ
+- HITACHI
+- ATEK
+- BOREX
+- VPMZ
+- DEZ
+- KIROVEC_LANDTECHNICK
+- KRANEKS
+- LZGMP
+- MMVZ
+- NAVIGATOR
+- MOZMZ
+- TEKZ
+- TECHNIKA_SERVICE
+
+## 28.06.2018
+### 14 новых марок каталога a2d
+- CATERPILLAR_ENGINE
+- AMITY
+- DIMEX
+- GREAT_WALL_ENGINE
+- HSW_ENGINE
+- GREAT_WALL
+- LEMKEN
+- TATA
+- JAC
+- VALMET_ENGINE
+- ZID_ENGINE
+- CHZAP
+- CHTZ_ENGINE
+- YUMZ_ENGINE
+
+## 18.05.2018
+### 5 новых марок каталога a2d и пополнен модельный ряд
+- MAZ
+- WEICHAI_ENGINE
+- CVS_FERRARI
+- FRESIA
+- SCHOPF
+
+## 02.04.2018
+### 14 новых марок каталога a2d и пополнен модельный ряд
+- DELTA
+- BZST
+- BZTM
+- BOLSHAYA_ZEMLYA
+- DZAK
+- ZLATMASH
+- OMSKTRANSMASH
+- PERVOMAJSKHIMMASH
+- SMOLTRA
+- SPECBURMASH
+- SEK
+- TDA_ENGINE
+- CHELEKS
+- YAVT
+
+## 12.03.2018
+### 14 новых марок каталога a2d и пополнен модельный ряд
+- VZS
+- GATCHINSELMASH
+- DORELECTROMASH
+- TMZV
+
 ## 18.12.2017
 ### Исправлено:
 - Ошибка со "страной по умолчанию" для марок **SKODA** и **SEAT**
