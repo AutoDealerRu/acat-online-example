@@ -41,7 +41,7 @@ class Helper
             if ($jsonToArray)
                 return (array) json_decode($e->getResponse()->getBody()->getContents());
             else
-                return json_decode();
+                return json_decode($e->getResponse()->getBody()->getContents());
         }
     }
 
