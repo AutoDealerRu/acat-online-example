@@ -38,7 +38,9 @@
     <input type='hidden' name='redirect' value='1'>
 </form>
 <?php
-if (count($vins) > 0 || count($frames) > 0) {
+if ($message) { ?>
+    <div><?php echo $message; ?></div>
+<?php } elseif (count($vins) > 0 || count($frames) > 0) {
     $itemsList = count($vins) > 0 ? $vins : (count($frames) > 0 ? $frames : []);
     foreach ($itemsList as $index => $vin) {
         switch (property_exists($vin, 'mark')) {

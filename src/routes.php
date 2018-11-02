@@ -33,6 +33,9 @@ $app->get('/search', function (Request $request, Response $response, array $args
     $data = Helper::getData($settings, true,"/search?text={$request->getQueryParams()['text']}");
     $data['hrefPrefix'] = $settings->urlBeforeCatalog;
     $data['searchValue'] = $request->getQueryParams()['text'];
+    if ($data && $data['error']) {
+        return $this->renderer->render($response, 'search/index.php', $data);
+    }
     if ((array_key_exists('vins', $data) && count($data['vins']) === 1) || (array_key_exists('frames', $data) && count($data['frames']) === 1)) {
         $vin = count($data['vins']) === 1 ? $data['vins'][0] : $data['frames'][0];
         switch (property_exists($vin, 'mark')) {

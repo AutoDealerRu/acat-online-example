@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class Helper
 {
@@ -26,16 +27,22 @@ class Helper
     public static function getData($api, $jsonToArray, $url = '')
     {
         $client = new Client();
-        $response = $client->request('GET', $api->host.'/catalogs'.$url, [
-            'headers' => [
-                'Authorization' => $api->token
-            ]
-        ]);
-
-        if ($jsonToArray)
-            return (array) json_decode($response->getBody()->getContents());
-        else
-            return json_decode($response->getBody()->getContents());
+        try {
+            $response = $client->request('GET', $api->host.'/catalogs'.$url, [
+                'headers' => [
+                    'Authorization' => $api->token
+                ]
+            ]);
+            if ($jsonToArray)
+                return (array) json_decode($response->getBody()->getContents());
+            else
+                return json_decode($response->getBody()->getContents());
+        } catch (ClientException $e) {
+            if ($jsonToArray)
+                return (array) json_decode($e->getResponse()->getBody()->getContents());
+            else
+                return json_decode();
+        }
     }
 
     /**
