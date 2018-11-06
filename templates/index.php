@@ -17,7 +17,9 @@
     </script>
 </head>
 <body>
-
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="icon-vin" viewBox="0 0 404.308 404.309"><path d="M 404.31868,285.87875 118.42975,-0.01017852 l 285.88752,0.006 10e-4,285.88326852 z"></path></symbol>
+</svg>
 <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}search" ?>'>
     <input class="hidden" id='search-info' type="checkbox">
     <label class="search-info-icon" for='search-info'>i</label>
@@ -58,7 +60,10 @@
                             <a href="<?php echo $hrefPrefix . $type->value . '/' . $mark->value ?>">
                             <span class="main_catalog--mark">
                                 <?php if ($mark->vin) {?>
-                                    <span class="mark-vin" title="Можно искать по VIN"></span>
+                                    <div class="mark-vin" title="Можно искать по VIN">
+                                        <svg width="80" height="80"><use xlink:href="#icon-vin"></use></svg>
+                                        <span>VIN</span>
+                                    </div>
                                 <?php } ?>
                                 <div class="main_catalog--mark_image">
                                     <img src="<?php echo $mark->image?>" alt="<?php $mark->name ?>"/>
