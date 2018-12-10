@@ -258,6 +258,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <?php
 $prevUrl = $prev ? "/{$hrefPrefix}{$prev->type}/{$prev->mark}/{$prev->country}/{$prev->directory}/{$prev->modification}/{$prev->group}/{$prev->figure}" : null;
 $nextUrl = $next ? "/{$hrefPrefix}{$next->type}/{$next->mark}/{$next->country}/{$next->directory}/{$next->modification}/{$next->group}/{$next->figure}" : null;

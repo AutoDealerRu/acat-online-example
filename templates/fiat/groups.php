@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="fiat_units">
     <?php foreach ($units as $group) { ?>
         <a href="<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/{$breadcrumbs[3]->url}/{$breadcrumbs[4]->url}/{$group->short_name}" ?>">

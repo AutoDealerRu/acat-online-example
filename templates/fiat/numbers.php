@@ -258,6 +258,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 
 <div class="list-group" style='text-align: center; position: relative;'>
     <?php if ($prevUrl) { ?>

@@ -18,6 +18,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="a2d--model">
     <span class="a2d--model_image">
         <?php if ($model->image) { ?>

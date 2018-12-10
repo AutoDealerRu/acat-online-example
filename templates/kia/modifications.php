@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <h1 class="title"><?php echo $breadcrumbs[2]->name . $breadcrumbs[5]->name ?></h1>
 <table class="table">
     <thead class="table-head">

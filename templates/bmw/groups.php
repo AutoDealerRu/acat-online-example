@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <h1 class="title">Основные группы деталей для <?php echo "{$breadcrumbs[2]->name} {$breadcrumbs[3]->name} ({$breadcrumbs[4]->name})" ?></h1>
 <div class="etka_groups">
     <?php foreach ($groups as $group) { ?>

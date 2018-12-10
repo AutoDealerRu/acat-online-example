@@ -18,6 +18,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div style="height: initial;">
     <span class="a2d--groups a2d--groups_lvl1">
         <?php foreach ($groups as $group) {?>

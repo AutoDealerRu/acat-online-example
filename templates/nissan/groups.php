@@ -265,6 +265,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="image-area">
     <div class="image-tab active" id="image-tab-1">
         <div class="main-image-area">

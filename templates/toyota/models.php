@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="countries">
     <?php foreach ($countries as $index => $country) {?>
         <a class="country <?php echo $country == $currentCountry ? 'active' : ''?>" href="/<?php echo $hrefPrefix . $country->type . '/' . $country->mark . '/' . $country->country_short_name ?>">

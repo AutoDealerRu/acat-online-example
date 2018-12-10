@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <?php foreach ($models as $model) { ?>
 <a href='<?php echo "/{$hrefPrefix}{$model->type}/{$model->mark}/{$model->country_short}/{$model->family}/{$model->model}" ?>'>
     <span class="catalog--mark drop-down">

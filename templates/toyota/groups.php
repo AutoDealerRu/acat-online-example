@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <h1 class="title"><?php echo "{$complectation->country_short_name} {$complectation->model_name} комплектация {$complectation->model_code}"?></h1>
 <h2>Информация об автомобиле</h2>
 <div class="model-row">

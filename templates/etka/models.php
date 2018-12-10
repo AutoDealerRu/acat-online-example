@@ -40,6 +40,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 
     <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
         <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">

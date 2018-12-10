@@ -315,6 +315,7 @@ if (property_exists($group,'coordinates')) {
     }
 }
 ?>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="list-group" style='text-align: center; position: relative;'>
     <?php if ($prev) { ?>
         <a class="group-prev" href="<?php echo $prevUrl ?>" title="<?php echo $prev->name ?>">

@@ -13,6 +13,7 @@
     </style>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
     <h1 class="title"><?php echo $service->name ?> для <?php echo $model->mark ?> <?php echo $model->name ?></h1>
     <div class="block-list">
         <?php foreach ($subservices as $item) { ?>

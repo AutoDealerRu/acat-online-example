@@ -258,6 +258,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="image-tabs">
  <div class="image-tabs-nav" data-initial=0>
      <?php if ($subgroups && is_array($subgroups) && count($subgroups) > 1) {

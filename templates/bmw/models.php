@@ -53,6 +53,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="bmw-block-body">
     <?php foreach ($categories as $key1 => $category) { ?>
         <div class="block-row">

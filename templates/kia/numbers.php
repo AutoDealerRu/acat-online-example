@@ -265,6 +265,7 @@
     </script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <?php
 $labels = [];
 $added = [];

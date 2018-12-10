@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <?php foreach ($categories as $group) {
 $url = "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$group->mark_short_name}/{$group->model_short_name}/{$group->modification_short_name}/{$group->short_name}"; ?>
     <div class="tile-block">

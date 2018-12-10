@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <h1 class="title"><?php echo $breadcrumbs[2]->name . ' ' . $breadcrumbs[5]->name . ' ' . $breadcrumbs[6]->name ?></h1>
 <div class="fiat_units">
 <?php foreach ($groups as $group) { ?>

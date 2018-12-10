@@ -6,6 +6,7 @@
     <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="block-list">
     <p class="fiat-row" style="position: relative; display: block; height: auto;">
         <?php foreach ($modifications as $modification) { ?>

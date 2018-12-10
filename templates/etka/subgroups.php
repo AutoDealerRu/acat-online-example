@@ -8,6 +8,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
+<?php require __DIR__ . '/../breadcrumbs.php'; ?>
     <h1 class="title"><?php echo $group->name ?> для <?php echo $model->mark ?> <?php echo $model->name ?></h1>
     <div class="etka_groups">
         <?php foreach ($subgroups as $item) { ?>
