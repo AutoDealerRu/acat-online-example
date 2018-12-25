@@ -50,6 +50,28 @@
 # Обновления
 
 ## 06.10.2018
+### 5 новых марок каталога a2d
+- CARMIX
+- DYNAPAC
+- FENDT
+- MASSEY FERGUSON
+- TTM
+
+### Обновлено 11 марок каталога a2d
+- Case
+- Hitachi
+- Komat'su
+- Lemken
+- Massey Ferguson
+- New Holland
+- SDLG
+- БелАЗ
+- БобруйскАгроМаш
+- КАЗ
+- РАФ
+- Ростсельмаш
+
+## 06.10.2018
 ### 2 новых марки каталога a2d
 - KALMAR
 - AGROCENTER
