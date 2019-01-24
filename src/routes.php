@@ -460,7 +460,7 @@ $app->group('/{type:'.implode('|', $response->a2d->types).'}/{mark:'.implode('|'
 
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
-
+        $data['isSKD'] = stripos($args['mark'], '_SKD') > 0;
         return $this->renderer->render($response, 'a2d/models.php', $data);
     });
 

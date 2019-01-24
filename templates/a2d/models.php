@@ -12,7 +12,7 @@
     <label class="form__label" for='search_vim'>Поиск по номеру (артикулу)</label>
     <input class="button button--green" type='submit' value="Найти">
 </form>
-<?php foreach ($models as $k => $model) {?>
+<?php if (!$isSKD) { foreach ($models as $k => $model) {?>
     <a href="/<?php echo $hrefPrefix . $mark->type . '/' . $mark->short_name . '/' . $model->short_name ?>">
         <span class="catalog--mark drop-down">
             <div class="catalog--mark_image">
@@ -31,6 +31,34 @@
             </div>
         </span>
     </a>
+<?php } ?>
+<?php } else { ?>
+    <table class="table table-search active">
+        <thead class="table-head">
+            <tr class="table-row bottom-line">
+                <td class="table-cell">Название</td>
+                <td class="table-cell">Описание</td>
+                <td class="table-cell">Период пр-ва</td>
+                <td class="table-cell">Актуальность</td>
+            </tr>
+        </thead>
+        <tbody class="table-body">
+            <?php foreach ($models as $k => $model) { ?>
+                <tr class="table-row bottom-line">
+                    <td class="table-cell">
+                        <a href="/<?php echo $hrefPrefix . $mark->type . '/' . $mark->short_name . '/' . $model->short_name ?>"><?php echo $model->name?></a>
+                    </td>
+                    <td class="table-cell"><?php echo $model->modification ?></td>
+                    <td class="table-cell"><?php echo $model->years ?></td>
+                    <td class="table-cell">
+                        <?php if ($model->relevance) {
+                            echo substr($model->relevance, 5, 2).'.'.substr($model->relevance, 0, 4);
+                        } ?>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 <?php } ?>
 </body>
 </html>
