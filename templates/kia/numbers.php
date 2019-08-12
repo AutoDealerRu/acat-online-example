@@ -294,22 +294,22 @@ foreach ($numbers as $item) {
         <div class="main-image-area">
             <div class="imageArea-menu">
                 <div class="imageArea-info-label">
-                    <img class="eye_open" src="https://212709.selcdn.ru/autocatalog-online/public/images/eye_open.png">
+                    <img class="eye_open" src="https://storage.yandexcloud.net/acat/public/images/eye_open.png">
                     <img class="eye_close"
-                         src="https://212709.selcdn.ru/autocatalog-online/public/images/eye_close.png">
+                         src="https://storage.yandexcloud.net/acat/public/images/eye_close.png">
                 </div>
                 <span class="imageArea-info-plus">+</span>
                 <span class="imageArea-info-minus">-</span>
                 <span class="imageArea-info-stretch">
-                    <img src="https://212709.selcdn.ru/autocatalog-online/public/images/arrows.png">
+                    <img src="https://storage.yandexcloud.net/acat/public/images/arrows.png">
                 </span>
                 <div class="imageArea-info-icon"><img
-                        src="https://212709.selcdn.ru/autocatalog-online/public/images/info.png">
+                        src="https://storage.yandexcloud.net/acat/public/images/info.png">
                     <div class="imageArea-info">
                         <div class="info-block">
                             <span class="image">
                                 <img class="eye_open"
-                                     src="https://212709.selcdn.ru/autocatalog-online/public/images/eye_open.png"
+                                     src="https://storage.yandexcloud.net/acat/public/images/eye_open.png"
                                      style="bottom: 0; margin: auto; display: block; margin-top: 10px;">
                             </span>
                             <span class="text">Показать или скрыть метки</span>
@@ -328,25 +328,25 @@ foreach ($numbers as $item) {
                         </div>
                         <div class="info-block">
                             <span class="image">
-                                <img style="margin: auto; display: block; margin-top: 10px;" src="https://212709.selcdn.ru/autocatalog-online/public/images/arrows.png">
+                                <img style="margin: auto; display: block; margin-top: 10px;" src="https://storage.yandexcloud.net/acat/public/images/arrows.png">
                             </span>
                             <span class="text">По размеру окна</span>
                         </div>
                         <div class="info-block x2">
                             <span class="image">
-                                <img src="https://212709.selcdn.ru/autocatalog-online/public/images/x2.png">
+                                <img src="https://storage.yandexcloud.net/acat/public/images/x2.png">
                             </span>
                             <span class="text">Выделение детали в таблице</span>
                         </div>
                         <div class="info-block x">
                             <span class="image">
-                                <img src="https://212709.selcdn.ru/autocatalog-online/public/images/move.png">
+                                <img src="https://storage.yandexcloud.net/acat/public/images/move.png">
                             </span>
                             <span class="text">Прокрутка картинки</span>
                         </div>
                         <div class="info-block z">
                             <span class="image">
-                                <img src="https://212709.selcdn.ru/autocatalog-online/public/images/zoom.png">
+                                <img src="https://storage.yandexcloud.net/acat/public/images/zoom.png">
                             </span>
                             <span class="text">Увеличить масштаб</span>
                         </div>
@@ -446,7 +446,7 @@ foreach ($numbers as $item) {
                 <td class="table-cell"><?php echo $number->name ?></td>
             <?php } else { ?>
                 <td class="table-cell">
-                    <img src="<?php echo $number->image ?>" onError="this.src='https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png'">
+                    <img src="<?php echo $number->image ?>" onError="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
                 </td>
                 <td class="table-cell"><a href='<?php echo "/{$hrefPrefix}{$number->type}/{$number->mark}/{$number->country_short}/{$number->family}/{$number->model}/{$number->modification}/{$number->group}/{$number->subgroup}" ?>'><?php echo "{$number->group_name}/{$number->subgroup_name}" ?></a></td>
                 <td class="table-cell"></td>

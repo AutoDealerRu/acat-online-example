@@ -13,7 +13,7 @@
         <a href='<?php echo "/{$hrefPrefix}{$item->type}/{$item->mark}/{$item->country_short}/{$item->family}/{$item->model}/{$item->modification}/{$item->group}/{$item->subgroup}" ?>'>
         <span class="fiat_unit">
             <div class="fiat_units_image">
-                <img src="<?php echo $item->image ?>" onerror="this.src='https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png'">
+                <img src="<?php echo $item->image ?>" onerror="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
             </div>
             <div class="fiat_units_name"><?php echo $item->name ?></div>
         </span>

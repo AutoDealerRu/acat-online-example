@@ -16,7 +16,7 @@
                     <?php if ($group->image) { ?>
                         <img src="<?php echo $group->image ?>">
                     <?php } else { ?>
-                        <img src="https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png">
+                        <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
                     <?php } ?>
                 </div>
                 <div class="bmw_group-name"><?php echo $group->name ?></div>

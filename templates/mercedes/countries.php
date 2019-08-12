@@ -44,7 +44,7 @@
                             <?php if ($aggregate->image) { ?>
                                 <img src="<?php echo $aggregate->image ?>">
                             <?php } else { ?>
-                                <img src="https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png">
+                                <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
                             <?php } ?>
                         </div>
                         <div class="tile-block-name"><?php echo $aggregate->name ?></div>

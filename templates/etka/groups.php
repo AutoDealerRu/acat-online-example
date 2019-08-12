@@ -16,7 +16,7 @@
                         <?php if ($item->image) { ?>
                             <img src="<?php echo $item->image ?>">
                         <?php } else { ?>
-                            <img src="https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png">
+                            <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
                         <?php } ?>
                     </div>
                     <div class="etka_group-name"><?php echo $item->name ?></div>
@@ -30,7 +30,7 @@
             <a href="<?php echo "/{$hrefPrefix}{$service->type}/{$service->mark}/{$service->country_short_name}/{$service->model}/{$service->year}/{$service->catalog_code}/{$service->dir}/service/{$service->service}"?>">
                 <span class="etka_group etka_group-model">
                     <div class="etka_group-image">
-                        <img src="https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png">
+                        <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
                     </div>
                     <div class="etka_group-name"><?php echo $service->name ?></div>
                 </span>

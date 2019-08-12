@@ -11,7 +11,7 @@
 <a href='<?php echo "/{$hrefPrefix}{$model->type}/{$model->mark}/{$model->country_short}/{$model->family}/{$model->model}" ?>'>
     <span class="catalog--mark drop-down">
         <div class="catalog--mark_image">
-            <img src="<?php echo $model->image ?>" onerror="this.src='https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler.png'">
+            <img src="<?php echo $model->image ?>" onerror="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
         </div>
         <div class="catalog--mark_description">
             <div class="catalog--mark_name"><?php echo $model->model_name ?></div>

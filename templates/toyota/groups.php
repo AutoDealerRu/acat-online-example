@@ -55,9 +55,9 @@
                 <a href='<?php echo "/{$hrefPrefix}{$subgroup->type}/{$subgroup->mark_short_name}/{$subgroup->country_short_name}/{$subgroup->catalog_code}/{$subgroup->model_code}/{$subgroup->sysopt}/{$subgroup->complectation_code}/{$subgroup->short_name}" ?>'>
                     <div class="tile-block-image">
                         <?php if (property_exists($subgroup, 'image')) { ?>
-                            <img src="<?php echo $subgroup->image ?>" onError="this.src='https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler130.png'">
+                            <img src="<?php echo $subgroup->image ?>" onError="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler130.png'">
                         <?php } else { ?>
-                            <img src="https://212709.selcdn.ru/autocatalog-online/public/images/avtodiler130.png">
+                            <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler130.png">
                         <?php } ?>
                     </div>
                     <span class="tile-block-name"><?php echo $subgroup->name ?></span>

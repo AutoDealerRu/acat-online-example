@@ -13,7 +13,7 @@
             cursor: pointer;
             height: 16px;
             width: 16px;
-            background-image: url(https://212709.selcdn.ru/autocatalog-online/public/images/info-close.png);
+            background-image: url(https://storage.yandexcloud.net/acat/public/images/info-close.png);
             background-size: 16px 16px;
         }
     </style>
