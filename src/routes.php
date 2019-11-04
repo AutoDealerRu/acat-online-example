@@ -79,6 +79,55 @@ $app->get('/{type}', function (Request $request, Response $response, array $args
     return $response->withRedirect('/', 301);
 });
 
+// Mitsubishi
+$app->group('/{type:CARS_FOREIGN}/{mark:mitsubishi}', function () {
+    // модели
+    $this->get('', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+
+        $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mitsubishi/models.php', $data);
+    });
+    // модели
+    $this->get('/{model}', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $url = "/{$args['type']}/{$args['mark']}/{$args['model']}";
+        $params = [];
+        if (count($request->getQueryParams()) > 0) {
+            foreach ($request->getQueryParams() as $k => $v) {
+                $params[] = $k. '='. $request->getQueryParam($k);
+            }
+        }
+        if (count($params) > 0) {
+            $url .= '?' . join('&', $params);
+        }
+        $data = Helper::getData($settings, true, $url);
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mitsubishi/modifications.php', $data);
+    });
+    // группы
+    $this->get('/{model}/{modification}[/{group}]', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $url = "/{$args['type']}/{$args['mark']}/{$args['model']}/${args['modification']}";
+        if (isset($args['group']) && !empty($args['group'])) {
+            $url .= "/{$args['group']}";
+        }
+        if ($request->getQueryParam('criteria')) {
+            $url .= '?criteria='.$request->getQueryParam('criteria');
+        }
+        $data = Helper::getData($settings, true, $url);
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+        if ($request->getQueryParam('criteria')) {
+            $data['criteria'] = $request->getQueryParam('criteria');
+        }
+
+        return $this->renderer->render($response, 'mitsubishi/groups.php', $data);
+    });
+});
+
 // Infiniti | Nissan
 $app->group('/{type:CARS_FOREIGN}/{mark:INFINITI|NISSAN}', function () {
 
