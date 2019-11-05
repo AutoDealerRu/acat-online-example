@@ -79,8 +79,8 @@ $app->get('/{type}', function (Request $request, Response $response, array $args
     return $response->withRedirect('/', 301);
 });
 
-// Mitsubishi
-$app->group('/{type:CARS_FOREIGN}/{mark:mitsubishi}', function () {
+// Mitsubishi / Ford
+$app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('|', $response->parts->marks).'}', function () {
     // модели
     $this->get('', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
