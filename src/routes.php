@@ -126,6 +126,18 @@ $app->group('/{type:CARS_FOREIGN}/{mark:mitsubishi}', function () {
 
         return $this->renderer->render($response, 'mitsubishi/groups.php', $data);
     });
+    // номера
+    $this->get('/{model}/{modification}/{group}/{subgroup}', function (Request $request, Response $response, array $args) {
+        $settings = Helper::getJSON($this->get('settings')['api']);
+        $url = "/{$args['type']}/{$args['mark']}/{$args['model']}/${args['modification']}/${args['group']}/${args['subgroup']}";
+        if ($request->getQueryParam('criteria')) {
+            $url .= '?criteria='.$request->getQueryParam('criteria');
+        }
+        $data = Helper::getData($settings, true, $url);
+        $data['hrefPrefix'] = $settings->urlBeforeCatalog;
+
+        return $this->renderer->render($response, 'mitsubishi/numbers.php', $data);
+    });
 });
 
 // Infiniti | Nissan

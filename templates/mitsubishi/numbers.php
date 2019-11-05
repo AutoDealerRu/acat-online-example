@@ -266,68 +266,31 @@
 </head>
 <body>
 <?php
-$prevUrl = $prev ? "/{$hrefPrefix}{$prev->type}/{$prev->mark}/{$prev->model}/{$prev->short_name}" : null;
-$nextUrl = $next ? "/{$hrefPrefix}{$next->type}/{$next->mark}/{$next->model}/{$next->short_name}" : null;
-$title = "{$group->name} {$model->name_with_mark}";
 
-$labels = [];
+$labs = [];
 $addedLabels = [];
-foreach ($numbers as $item) {
-    if (property_exists($item,'coordinates')) {
-        foreach ($item->coordinates as $coordinate) {
-            $labelIndex = $coordinate->bottom->x.$coordinate->bottom->y.$coordinate->top->x.$coordinate->top->y;
-            if (!in_array($labelIndex,$addedLabels)) {
-                $addedLabels[] = $labelIndex;
-                if ($item->index && strlen($item->index) > 0) {
-                    $index = $item->index;
-                } elseif ($item->number && strlen($item->number) > 0) {
-                    $index = $item->number;
-                } else {
-                    $index = $item->name;
-                }
-                $labels[] = json_decode(json_encode([
-                    'index' => $index,
-                    'vertical'=> $coordinate->vertical,
-                    'title' => "{$item->name} ({$item->number})",
-                    'bottomX' => $coordinate->bottom->x,
-                    'bottomY'=> $coordinate->bottom->y,
-                    'topX'=> $coordinate->top->x,
-                    'topY'=> $coordinate->top->y
-                ]));
-            }
+foreach ($labels as $label) {
+    if (property_exists($label,'coordinate')) {
+        $labelIndex = $label->coordinate->bottom->x.$label->coordinate->bottom->y.$label->coordinate->top->x.$label->coordinate->top->y;
+        if (!in_array($labelIndex,$addedLabels)) {
+            $addedLabels[] = $labelIndex;
+            $index = $label->number;
+            $labels[] = json_decode(json_encode([
+                'index' => $index,
+                'vertical'=> false,
+                'title' => $label->number,
+                'bottomX' => $label->coordinate->bottom->x,
+                'bottomY'=> $label->coordinate->bottom->y,
+                'topX'=> $label->coordinate->top->x,
+                'topY'=> $label->coordinate->top->y
+            ]));
         }
-    }
-}
-
-if (property_exists($group,'coordinates')) {
-    foreach ($group->coordinates as $item) {
-        $url = "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/{$breadcrumbs[3]->url}/{$item->group_short_name}";
-        $labels[] = json_decode(json_encode([
-            'url' => $url,
-            'index' => $item->name,
-            'vertical' => property_exists($item,'vertical') ? $item->vertical : false,
-            'title' => $item->group_name,
-            'bottomX' => $item->coordinate->bottom->x,
-            'bottomY' => $item->coordinate->bottom->y,
-            'topX' => $item->coordinate->top->x,
-            'topY' => $item->coordinate->top->y
-        ]));
     }
 }
 ?>
 <?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <div class="list-group" style='text-align: center; position: relative;'>
-    <?php if ($prev) { ?>
-        <a class="group-prev" href="<?php echo $prevUrl ?>" title="<?php echo $prev->name ?>">
-            <span class="list-group-prev"></span>
-        </a>
-    <?php } ?>
-    <h1 class="title" style="margin: 0 50px; display: inline-block;"><?php echo $title ?></h1>
-    <?php if ($next) { ?>
-        <a class="group-next" href="<?php echo $nextUrl ?>" title="<?php echo $next->name ?>">
-            <span class="list-group-next"></span>
-        </a>
-    <?php } ?>
+    <h1 class="title" style="margin: 0 50px; display: inline-block;"><?php echo "{$group->name} {$model->name}" ?></h1>
 </div>
 
 <div class="image-area">
@@ -401,51 +364,22 @@ if (property_exists($group,'coordinates')) {
             <div class="main-image imageArea" id="imageArea">
                 <span class="imageLayout" id="imageLayout">
 
-                    <img src="<?php echo "/{$model->type}/{$model->mark_short_name}/{$model->short_name}/{$group->short_name}/image"?>">
+                    <img src="<?php echo $image?>">
                     <?php if (count($labels) > 0) { ?>
                         <?php foreach ($labels as $coordinate) { ?>
-                            <?php if (property_exists($coordinate,'url')) { ?>
-                                <a class="ladel a2d"
-                                   href="<?php echo $coordinate->url ?>"
-                                   title="<?php echo $coordinate->title ?>"
-                                   style="position:absolute; padding:1px 5px;
-                                    left: <?php echo $coordinate->topX ?>px;
-                                    top: <?php echo $coordinate->topY ?>px;
-                                    min-width: <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
-                                    min-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                    line-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                    font-size: <?php echo $coordinate->bottomY - $coordinate->topY - 2 ?>px;"
-                                ><?php echo $coordinate->index?></a>
-                            <?php } elseif($coordinate->vertical) { ?>
-                                <span class="ladel a2d"
-                                      data-left="<?php echo $coordinate->topX ?>"
-                                      data-top="<?php echo $coordinate->topY ?>"
-                                      title="<?php echo $coordinate->title ?>"
-                                      data-index="<?php echo $coordinate->index ?>"
-                                      style="position:absolute; padding:2px 1px;
-                                            left: <?php echo $coordinate->topX ?>px;
-                                            top: <?php echo $coordinate->topY ?>px;
-                                            min-width: <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
-                                            min-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                            line-height:  <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
-                                            font-size:  <?php echo $coordinate->bottomX - $coordinate->topX - 2 ?>px;">
-                                    <span style="writing-mode: vertical-rl; "><?php echo $coordinate->index ?></span>
-                                </span>
-                            <?php } else { ?>
-                                <span class="ladel a2d"
-                                      data-left="<?php echo $coordinate->topX ?>"
-                                      data-top="<?php echo $coordinate->topY ?>"
-                                      title="<?php echo $coordinate->title ?>"
-                                      data-index="<?php echo $coordinate->index ?>"
-                                      style="position:absolute; padding:1px 5px;
-                                            left: <?php echo $coordinate->topX ?>px;
-                                            top: <?php echo $coordinate->topY ?>px;
-                                            min-width: <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
-                                            min-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                            line-height:  <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                            font-size:  <?php echo $coordinate->bottomY - $coordinate->topY - 2 ?>px;"
-                                ><?php echo $coordinate->index ?></span>
-                            <?php } ?>
+                            <span class="ladel a2d"
+                                  data-left="<?php echo $coordinate->topX ?>"
+                                  data-top="<?php echo $coordinate->topY ?>"
+                                  title="<?php echo $coordinate->title ?>"
+                                  data-index="<?php echo $coordinate->index ?>"
+                                  style="position:absolute; padding:1px 5px;
+                                        left: <?php echo $coordinate->topX ?>px;
+                                        top: <?php echo $coordinate->topY ?>px;
+                                        min-width: <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
+                                        min-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
+                                        line-height:  <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
+                                        font-size:  <?php echo $coordinate->bottomY - $coordinate->topY - 2 ?>px;"
+                            ><?php echo $coordinate->index ?></span>
                         <?php } ?>
                     <?php } ?>
                 </span>
@@ -464,47 +398,25 @@ if (property_exists($group,'coordinates')) {
         </tr>
     </thead>
     <tbody class="table-body">
-    <?php foreach ($numbers as $index => $item) {
-    $ind = $item->index && strlen($item->index) > 0 ? $item->index : strlen($item->number) > 0 ? $item->number : $item->name;?>
+    <?php foreach ($numbers as $index1 => $numberGroup) {
+    foreach ($numberGroup->parts as $index2 => $number) {
+        $ind = $number->positionNumber ? $number->positionNumber : ($number->number ? $number->number : $number->description) ?>
         <tr class="table-row bottom-line to-image" data-index="<?php echo $ind ?>">
-            <td class="table-cell"><?php echo $item->index ?></td>
-            <td class="table-cell number-info-cell" data-number-info="<?php echo $index?>">
+            <td class="table-cell"><?php echo $number->positionNumber ?></td>
+            <td class="table-cell number-info-cell" data-number-info="<?php echo $index1.$index2?>">
                 <input id='input' type="checkbox">
                 <label for='input'></label>
                 <div class="modal-number-info">
                     <span class="modal-number-info-close"></span>
                     <div class="number-info">
-                        <?php if ($model->name_with_mark) { ?>
-                        <div class="number-info-params">Автомобиль:<?php echo $model->name_with_mark ?></div>
-                        <?php } ?>
-                        <?php if ($item->relevance) { ?>
-                        <div class="number-info-params">Актуальность: <?php echo substr($item->relevance, 8, 2).'.'.substr($item->relevance, 5, 2).'.'.substr($item->relevance, 0, 4) ?></div>
-                        <?php } ?>
-                        <?php if ($item->modification) { ?>
-                        <div class="number-info-params">Модификации: <?php echo $item->modification ?></div>
-                        <?php } ?>
-                        <?php if (property_exists($item,'count') && count($item->count) > 0) { ?>
-                            <div class="number-info-count">
-                                <p>
-                                    Количество:
-                                    <div class="numbers_count">
-                                        <?php foreach ($item->count as $count) { ?>
-                                            <p><?php echo ($count->count ? $count->count : '0') . ' - ' . $count->title?></p>
-                                        <?php } ?>
-                                    </div>
-                                </p>
-                            </div>
-                        <?php } ?>
-                        <?php if ($item->notes) {?>
-                            <div class="number-info-params"><?php echo $item->notes ?></div>
-                        <?php } ?>
+
                     </div>
                 </div>
             </td>
-            <td class="table-cell"><?php echo $item->number ?></td>
-            <td class="table-cell"><?php echo $item->name ?></td>
+            <td class="table-cell"><?php echo $number->number ?></td>
+            <td class="table-cell"><?php echo ($number->name ? $number->name : '') . ($number->name ? ' (':'') . $numberGroup->name . ($number->name ? ')':'') ?></td>
         </tr>
-    <?php } ?>
+    <?php }} ?>
     </tbody>
 </table>
 
