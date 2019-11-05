@@ -44,6 +44,17 @@ if ($message) { ?>
     $itemsList = count($vins) > 0 ? $vins : (count($frames) > 0 ? $frames : []);
     foreach ($itemsList as $index => $vin) {
         switch (property_exists($vin, 'mark')) {
+            case (in_array($vin->mark, ['mitsubishi'])):
+                $url = "./{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria={$vin->criteria}";
+                $name = $vin->title;
+                $params = [];
+                foreach ($vin->parameters as $p) $params[] = "{$p->name}: {$p->value}";
+                if (count($params) > 0)
+                    $name .= ' (' . implode(', ', $params) . ')';
+                ?>
+                    <a href="<?php echo $url ?>"><?php echo $name?></a>
+                <?php
+                break;
             case (in_array($vin->mark, ['INFINITI', 'NISSAN'])):
                 $countryList = [
                     'EL' => 'Европа (лев)',
