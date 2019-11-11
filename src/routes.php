@@ -79,7 +79,7 @@ $app->get('/{type}', function (Request $request, Response $response, array $args
     return $response->withRedirect('/', 301);
 });
 
-// Mitsubishi / Ford
+// parts (полный список типов и марок: https://acat.online/api/public/types -> parts)
 $app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('|', $response->parts->marks).'}', function () {
     // модели
     $this->get('', function (Request $request, Response $response, array $args) {
@@ -88,7 +88,7 @@ $app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('
         $data = Helper::getData($settings, true,"/{$args['type']}/{$args['mark']}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
-        return $this->renderer->render($response, 'mitsubishi/models.php', $data);
+        return $this->renderer->render($response, 'parts/models.php', $data);
     });
     // модели
     $this->get('/{model}', function (Request $request, Response $response, array $args) {
@@ -106,7 +106,7 @@ $app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('
         $data = Helper::getData($settings, true, $url);
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
-        return $this->renderer->render($response, 'mitsubishi/modifications.php', $data);
+        return $this->renderer->render($response, 'parts/modifications.php', $data);
     });
     // группы
     $this->get('/{model}/{modification}[/{group}]', function (Request $request, Response $response, array $args) {
@@ -124,7 +124,7 @@ $app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('
             $data['criteria'] = $request->getQueryParam('criteria');
         }
 
-        return $this->renderer->render($response, 'mitsubishi/groups.php', $data);
+        return $this->renderer->render($response, 'parts/groups.php', $data);
     });
     // номера
     $this->get('/{model}/{modification}/{group}/{subgroup}', function (Request $request, Response $response, array $args) {
@@ -136,7 +136,7 @@ $app->group('/{type:'.implode('|', $response->parts->types).'}/{mark:'.implode('
         $data = Helper::getData($settings, true, $url);
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
-        return $this->renderer->render($response, 'mitsubishi/numbers.php', $data);
+        return $this->renderer->render($response, 'parts/numbers.php', $data);
     });
 });
 
