@@ -44,7 +44,9 @@ if ($message) { ?>
     $itemsList = count($vins) > 0 ? $vins : (count($frames) > 0 ? $frames : []);
     foreach ($itemsList as $index => $vin) {
         switch (property_exists($vin, 'mark')) {
-            case (in_array($vin->mark, ['mitsubishi'])):
+            case (in_array($vin->mark, ['mitsubishi','ford','opel','mazda','subaru','vauxhall','peugeot','citroen',
+                'volvo','honda','suzuki','isuzu','chrysler','dodge','jeep','plymouth','chevrolet','jaguar',
+                'land-rover','porsche','chery','volvo-trucks','man'])):
                 $url = "./{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria={$vin->criteria}";
                 $name = $vin->title;
                 $params = [];
