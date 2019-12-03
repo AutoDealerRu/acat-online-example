@@ -41,9 +41,9 @@
 <?php
 if ($message) { ?>
     <div><?php echo $message; ?></div>
-<?php } elseif (count($vins) > 0 || count($frames) > 0) {
-    $itemsList = count($vins) > 0 ? $vins : (count($frames) > 0 ? $frames : []);
-    if ($catalog && $catalog === 'PARTS') {
+<?php } elseif ((is_array($vins) && count($vins) > 0) || (is_array($frames) && count($frames) > 0)) {
+    $itemsList = is_array($vins) && count($vins) > 0 ? $vins : (is_array($frames) && count($frames) > 0 ? $frames : []);
+    if ($catalog && $catalog === 'PARTS' && count($itemsList) > 0) {
         $paramKeys = [];
         foreach ($itemsList as $vin) {
             if (property_exists($vin, 'parameters') && count($vin->parameters) > 0) {
@@ -217,7 +217,7 @@ if ($message) { ?>
             }
         }
     }
-} elseif  (count($marks) > 0) { ?>
+} elseif  (is_array($marks) && count($marks) > 0) { ?>
     <?php foreach ($marks as $ind => $mark) {
         $url = "/{$hrefPrefix}";
         $name = ""; ?>
