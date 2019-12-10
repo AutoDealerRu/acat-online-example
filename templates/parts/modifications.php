@@ -50,6 +50,7 @@
     </tbody>
 </table>
 
+<?php if ($pages && is_array($pages) && count($pages) > 1) { ?>
 <!-- Постраничная навигация-->
 <script type="text/javascript">
     function go2page() {
@@ -72,17 +73,12 @@
 <form method="get">
     <select name="page" id="acMitPage" onchange="go2page()">
         <?php foreach ($pages as $p) {?>
-            <option
-                <?php echo $p === (int) $page ? 'selected' : '' ?>
-                value="<?php echo $p ?>"
-
-            ><!--onclick="go2page(<?php echo $p ?>); return false;"-->
-                <?php echo $p ?>
-            </option>
+            <option <?php echo $p === (int) $page ? 'selected' : '' ?> value="<?php echo $p ?>"><?php echo $p ?></option>
         <?php } ?>
     </select>
 </form>
 <!-- Постраничная навигация (конец)-->
+<?php } ?>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
         <span class="catalog--mark drop-down">
             <div class="fiat--mark_image">
                 <?php if ($model->img) { ?>
-                    <img src="<?php echo $model->img ?>">
+                    <img src="<?php echo $model->img ?>" onerror="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
                 <?php } else { ?>
                     <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
                 <?php } ?>
