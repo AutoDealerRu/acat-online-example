@@ -13,9 +13,9 @@
 <form method="get" id="acMitFiltersForm" style="margin: 8px 0 16px">
     <?php foreach ($filters as $f) {?>
         <select name="<?php echo $f->name->key ?>" onchange="document.getElementById('acMitFiltersForm').submit()">
-            <option value="" <?php echo !$f->currentValue ? 'selected' : '' ?>><?php echo $f->name->text ?></option>
+            <option value="" <?php echo property_exists($f, 'currentValue') && !$f->currentValue ? 'selected' : '' ?>><?php echo $f->name->text ?></option>
             <?php foreach ($f->values as $v) {?>
-                <option <?php echo $f->currentValue === $v->id ? 'selected' : '' ?> value="<?php echo $v->id ?>">
+                <option <?php echo property_exists($f, 'currentValue') && $f->currentValue === $v->id ? 'selected' : '' ?> value="<?php echo $v->id ?>">
                     <?php echo $v->text ?>
                 </option>
             <?php } ?>
