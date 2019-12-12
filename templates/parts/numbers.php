@@ -404,19 +404,28 @@ foreach ($labels as $label) {
         <tr class="table-row bottom-line to-image" data-index="<?php echo $ind ?>">
             <td class="table-cell"><?php echo $number->positionNumber ?></td>
             <td class="table-cell number-info-cell" data-number-info="<?php echo $index1.$index2?>">
-                <?php if (property_exists($number, 'description') && $number->description) { ?>
+                <?php if ((property_exists($number, 'description') && $number->description) || (property_exists($number, 'notice') && $number->notice)) { ?>
                 <input id='input' type="checkbox">
                 <label for='input'></label>
                 <div class="modal-number-info">
                     <span class="modal-number-info-close"></span>
                     <div class="number-info">
-                        <div class="number-info-params">
-                            <?php
-                            $d1 = preg_replace("/\:[\s]{0,2}\n/", ': ', $number->description);
-                            $d2 = str_replace("\n", "<br>", $d1);
-                            echo  $d2;
-                            ?>
-                        </div>
+                        <?php if (property_exists($number, 'notice') && $number->notice) { ?>
+                            <div class="number-info-params">
+                                <?php echo $number->notice ?>
+                            </div>
+                        <?php } ?>
+                        <?php if (property_exists($number, 'description') && $number->description) { ?>
+                            <div class="number-info-params">
+                                <?php
+                                $d1 = preg_replace("/\:[\s]{0,2}\n/", ': ', $number->description);
+                                $d2 = str_replace("<", "(", $d1);
+                                $d3 = str_replace(">", ")", $d2);
+                                $d4 = str_replace("\n", "<br>", $d3);
+                                echo $d4;
+                                ?>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
                 <?php } ?>
@@ -424,8 +433,11 @@ foreach ($labels as $label) {
             <td class="table-cell"><?php echo $number->number ?></td>
             <td class="table-cell">
                 <?php
-                if ($number->name && $numberGroup->name && $number->name === $numberGroup->name) $number->name = null;
-                echo ($numberGroup->name ? $numberGroup->name : '') . ($number->name && $numberGroup->name ? ' (':'') . $number->name . ($number->name && $numberGroup->name ? ')':'')
+                if ($number->name) {
+                    echo $number->name . ($numberGroup->name && $numberGroup->name !== $number->name && $numberGroup->name !== $breadcrumbs[5]->name ? ' ('.$numberGroup->name.')':'');
+                } else {
+                    echo $numberGroup->name;
+                }
                 ?>
             </td>
         </tr>
