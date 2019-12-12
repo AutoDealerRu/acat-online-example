@@ -30,7 +30,7 @@ $app->get('/', function (Request $request, Response $response) {
 $app->get('/search', function (Request $request, Response $response, array $args) use ($rr) {
     $settings = Helper::getJSON($this->get('settings')['api']);
 
-    $data = Helper::getData($settings, true,"/search?text={$request->getQueryParams()['text']}");
+    $data = Helper::getData($settings, true,"/search2?text={$request->getQueryParams()['text']}");
     $data['hrefPrefix'] = $settings->urlBeforeCatalog;
     $data['searchValue'] = $request->getQueryParams()['text'];
     if ($data && $data['error']) {
