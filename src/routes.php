@@ -22,7 +22,8 @@ $app->get('/', function (Request $request, Response $response) {
 
     return $this->renderer->render($response, 'index.php', [
         'hrefPrefix' => $settings->urlBeforeCatalog,
-        'types' => $types
+        'types' => $types,
+        'error' => null
     ]);
 });
 
@@ -33,7 +34,7 @@ $app->get('/search', function (Request $request, Response $response, array $args
     $data = Helper::getData($settings, true,"/search2?text={$request->getQueryParams()['text']}");
     $data['hrefPrefix'] = $settings->urlBeforeCatalog;
     $data['searchValue'] = $request->getQueryParams()['text'];
-    if ($data && $data['error']) {
+    if (isset($data) && is_array($data) && array_key_exists('error', $data)) {
         return $this->renderer->render($response, 'search/index.php', $data);
     }
     if ((array_key_exists('vins', $data) && count($data['vins']) === 1) || (array_key_exists('frames', $data) && count($data['frames']) === 1)) {

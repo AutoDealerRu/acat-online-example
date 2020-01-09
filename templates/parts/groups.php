@@ -99,7 +99,7 @@
 
 <div class="fiat_units">
     <?php foreach ($groups as $index => $gr) {
-        $url = (!$group ? ('./' . $breadcrumbs[4]->url . '/' . $gr->id) : ( !$gr->hasSubgroups ? ( ('./' . $gr->parentId . '/' . $gr->id) ) : './' . $gr->id)) . ($criteria ? ('?criteria='.$criteria) : '');
+        $url = (!$group ? ('./' . $breadcrumbs[4]->url . '/' . $gr->id) : ( !$gr->hasSubgroups ? ( ('./' . $gr->parentId . '/' . $gr->id) ) : './' . $gr->id)) . ($criteria ? ('?criteria='.urlencode($criteria)) : '');
         ?>
         <div style="position: relative;display: inline-block; vertical-aligt: top;">
             <a href="<?php echo $url ?>" style="display: inline-block;margin: 13px">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>AcatOnline</title>
-    <link href="<?php echo $hrefPrefix ?>/styles.css" rel="stylesheet">
+    <link href="<?php echo isset($hrefPrefix) ? $hrefPrefix : '' ?>/styles.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.7.2.min.js"></script>
     <style>
         span.modal-vin-info-close {
@@ -33,17 +33,16 @@
             <p>Поиск по VIN/кузову: марки Abarth, Alfa-Romeo, Fiat, Lancia, Audi, Skoda, Seat, Volkswagen, Bmw, Mini, Rolls-Royce, Kia, Hyundai, Nissan, Infinity, Toyota, Lexus</p>
         </div>
     </div>
-    <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' ' value="<?php echo $searchValue ?>">
+    <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' ' value="<?php echo isset($searchValue) ? $searchValue : '' ?>">
     <label class="form__label" for='search_vim'>Поиск по VIN, кузову, марке или модели</label>
     <input class="button button--green" type='submit' value="Найти">
     <input type='hidden' name='redirect' value='1'>
 </form>
-<?php
-if ($message) { ?>
-    <div><?php echo $message; ?></div>
-<?php } elseif ((is_array($vins) && count($vins) > 0) || (is_array($frames) && count($frames) > 0)) {
+<?php if (isset($error) && $error) { ?>
+    <h1 style="color: red;"><?php echo $error ?></h1>
+<?php } elseif ((isset($vins) && is_array($vins) && count($vins) > 0) || (isset($frames) && is_array($frames) && count($frames) > 0)) {
     $itemsList = is_array($vins) && count($vins) > 0 ? $vins : (is_array($frames) && count($frames) > 0 ? $frames : []);
-    if ($catalog && $catalog === 'PARTS' && count($itemsList) > 0) {
+    if (isset($catalog) && is_string($catalog) && $catalog === 'PARTS' && count($itemsList) > 0) {
         $paramKeys = [];
         foreach ($itemsList as $vin) {
             if (property_exists($vin, 'parameters') && count($vin->parameters) > 0) {
@@ -109,7 +108,7 @@ if ($message) { ?>
                 </tr>
             </thead>
             <tbody class="table-body">
-            <?php foreach ($itemsList as $index => $vin) { $url = "/{$hrefPrefix}{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria={$vin->criteria}"; ?>
+            <?php foreach ($itemsList as $index => $vin) { $url = "/{$hrefPrefix}{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria=".urlencode($vin->criteria); ?>
                 <tr class="table-row">
                     <td class="table-cell">
                         <a href="<?php echo $url?>"><?php echo $vin->title ?></a>
@@ -217,7 +216,7 @@ if ($message) { ?>
             }
         }
     }
-} elseif  (is_array($marks) && count($marks) > 0) { ?>
+} elseif  (isset($marks) && is_array($marks) && count($marks) > 0) { ?>
     <?php foreach ($marks as $ind => $mark) {
         $url = "/{$hrefPrefix}";
         $name = ""; ?>
