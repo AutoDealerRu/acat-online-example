@@ -37,7 +37,7 @@
     <input type='hidden' name='redirect' value='1'>
 </form>
 
-<?php if ($error) { ?>
+<?php if ($error && strlen($error) > 0) { ?>
     <h1 style="color: red;"><?php echo $error ?></h1>
 <?php } else { ?>
     <ul class="main_catalog">
