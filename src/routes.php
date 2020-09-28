@@ -19,11 +19,12 @@ $app->get('/', function (Request $request, Response $response) {
         ]);
     }
     $types = Helper::getData($settings, false);
-
+    $error = null;
+    if ($types && property_exists($types, 'code') && $types->code === 403) $error = $types->message;
     return $this->renderer->render($response, 'index.php', [
         'hrefPrefix' => $settings->urlBeforeCatalog,
         'types' => $types,
-        'error' => null
+        'error' => $error
     ]);
 });
 
