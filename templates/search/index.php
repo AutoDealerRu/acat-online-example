@@ -47,6 +47,7 @@
         foreach ($itemsList as $vin) {
             if (property_exists($vin, 'parameters') && count($vin->parameters) > 0) {
                 foreach ($vin->parameters as $p) {
+                    if ($p->key === 'modification') continue;
                     $pp = null;
                     foreach($paramKeys as $pr) {
                         if ($pr->key === $p->key) {
