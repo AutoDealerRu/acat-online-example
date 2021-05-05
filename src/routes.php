@@ -157,7 +157,7 @@ $app->group('/{type:'.implode('|', $response->a2d->types).'}/{mark:'.implode('|'
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
-        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
+        $data['numbers'] = Helper::getData($settings, true,"/search2?type={$args['type']}&mark={$args['mark']}&number={$search}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
         return $this->renderer->render($response, 'a2d/search.php', $data);
@@ -211,7 +211,7 @@ $app->group('/{type:CARS_FOREIGN}/{mark:ABARTH|ALFA_ROMEO|LANCIA|FIAT}', functio
     $this->get('/search', function (Request $request, Response $response, array $args) {
         $settings = Helper::getJSON($this->get('settings')['api']);
         $search = $request->getQueryParam('number');
-        $data['numbers'] = Helper::getData($settings, true,"/search?type={$args['type']}&mark={$args['mark']}&number={$search}");
+        $data['numbers'] = Helper::getData($settings, true,"/search2?type={$args['type']}&mark={$args['mark']}&number={$search}");
         $data['hrefPrefix'] = $settings->urlBeforeCatalog;
 
         return $this->renderer->render($response, 'fiat/search.php', $data);
