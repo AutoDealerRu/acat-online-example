@@ -335,7 +335,7 @@ if (property_exists($group,'coordinates')) {
         <div class="main-image-area">
             <div class="imageArea-menu">
                 <div class="imageArea-info-label">
-                    <img class="eye_open" src="https://storage.yandexcloud.net/acat/public/images/eye_open.png">
+                    <img class="eye_open" src="https://storage.yandexcloud.net/acat/public/images/eye_open.png" alt="">
                     <img class="eye_close" src="https://storage.yandexcloud.net/acat/public/images/eye_close.png">
                 </div>
                 <span class="imageArea-info-plus">+</span>
@@ -343,14 +343,12 @@ if (property_exists($group,'coordinates')) {
                 <span class="imageArea-info-stretch">
                     <img src="https://storage.yandexcloud.net/acat/public/images/arrows.png">
                 </span>
-                <div class="imageArea-info-icon"><img
-                            src="https://storage.yandexcloud.net/acat/public/images/info.png">
+                <div class="imageArea-info-icon">
+                    <img src="https://storage.yandexcloud.net/acat/public/images/info.png">
                     <div class="imageArea-info">
                         <div class="info-block">
                             <span class="image">
-                                <img class="eye_open"
-                                     src="https://storage.yandexcloud.net/acat/public/images/eye_open.png"
-                                     style="bottom: 0; margin: auto; display: block; margin-top: 10px;">
+                                <img class="eye_open" src="https://storage.yandexcloud.net/acat/public/images/eye_open.png" style="bottom: 0; margin: auto; display: block; margin-top: 10px;">
                             </span>
                             <span class="text">Показать или скрыть метки</span>
                         </div>
