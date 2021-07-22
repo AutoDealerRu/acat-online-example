@@ -83,7 +83,8 @@ $app->get('/search', function (Request $request, Response $response, array $args
     if (isset($data) && is_array($data) && array_key_exists('error', $data)) {
         return $this->renderer->render($response, 'search/index.php', $data);
     }
-    if ((array_key_exists('vins', $data) && count($data['vins']) === 1) || (array_key_exists('frames', $data) && count($data['frames']) === 1)) {
+    if ((array_key_exists('vins', $data) && is_array($data['vins']) && count($data['vins']) === 1) ||
+        (array_key_exists('frames', $data) && is_array($data['frames'])  && count($data['frames']) === 1)) {
         $vin = count($data['vins']) === 1 ? $data['vins'][0] : $data['frames'][0];
         switch (property_exists($vin, 'mark')) {
             case (in_array($vin->mark, ['FIAT', 'LANCIA', 'ALFA_ROMEO', 'ABARTH'])):
