@@ -49,6 +49,18 @@
 
 # Обновления
 
+## 23.12.2021
+### Новые марки каталога a2d
+- JOHN GREAVES
+
+## 14.10.2021
+### Новые марки каталога a2d
+- ASHOK LEYLAND
+- DORMASHEXPO
+- INTEH
+- MORDOVAGROMASH
+- NOVATOR PLUS
+
 ## 19.07.2021
 ### Обновление марок
 - Fiat - обновлен
