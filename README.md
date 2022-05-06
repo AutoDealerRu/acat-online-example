@@ -49,6 +49,14 @@
 
 # Обновления
 
+## 11.05.2022
+### Новые марки каталога a2d
+- Chery
+- Haima
+- Lovol
+- SUNWARD
+- XINCHAI_EGINE
+
 ## 23.12.2021
 ### Новые марки каталога a2d
 - JOHN GREAVES
