@@ -22,21 +22,25 @@ class Helper
      * @param $api
      * @param $jsonToArray
      * @param string $url
+     * @param array $queryParams
      * @return mixed
      */
-    public static function getData($api, $jsonToArray, $url = '')
+    public static function getData($api, $jsonToArray, $url = '', array $queryParams = [])
     {
         $client = new Client();
         try {
-            $response = $client->request('GET', $api->host.'/catalogs'.$url, [
+            $response = $client->request('GET', $api->host.$url, [
                 'headers' => [
                     'Authorization' => $api->token
-                ]
+                ],
+                'query' => $queryParams
             ]);
-            if ($jsonToArray)
-                return (array) json_decode($response->getBody()->getContents());
-            else
+            if ($jsonToArray) {
+                $resData = $response->getBody()->getContents();
+                return (array) json_decode($resData);
+            } else {
                 return json_decode($response->getBody()->getContents());
+            }
         } catch (ClientException $e) {
             if ($jsonToArray)
                 return (array) json_decode($e->getResponse()->getBody()->getContents());
@@ -50,15 +54,17 @@ class Helper
      *
      * @param $api
      * @param string $url
+     * @param array $queryParams
      * @return mixed
      */
-    public static function getImage($api, $url = '')
+    public static function getImage($api, $url = '', array $queryParams = [])
     {
         $client = new Client();
-        $response = $client->request('GET', $api->host.'/catalogs'.$url, [
+        $response = $client->request('GET', $api->host.$url, [
             'headers' => [
                 'Authorization' => $api->token
-            ]
+            ],
+            'query' => $queryParams
         ]);
         return $response->getBody()->getContents();
     }

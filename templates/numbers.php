@@ -265,46 +265,27 @@
     </script>
 </head>
 <body>
-<?php require __DIR__ . '/../breadcrumbs.php'; ?>
-<?php
-$labels = [];
-$added = [];
-foreach ($numbers as $item) {
-    if (property_exists($item,'coordinate')) {
-        $index = ($item->label ? $item->label : ($item->number ? $item->number : $item->name));
-        $coordinateIndex = $item->coordinate->bottom->x.$item->coordinate->bottom->y.$item->coordinate->top->x.$item->coordinate->top->y;
-        if (!in_array($coordinateIndex, $added)) {
-            $added[] = $coordinateIndex;
-            $labels[] = json_decode(json_encode([
-                'index' => $index,
-                'title' => "{$item->name} ({$item->number})",
-                'bottomX' => $item->coordinate->bottom->x,
-                'bottomY' => $item->coordinate->bottom->y,
-                'topX' => $item->coordinate->top->x,
-                'topY' => $item->coordinate->top->y
-            ]));
-        }
-    }
-} ?>
 
-<h1 class="title"><?php echo $breadcrumbs[8]->name ?></h1>
+<?php require __DIR__ . '/breadcrumbs.php'; ?>
+<div class="list-group" style='text-align: center; position: relative;'>
+    <h1 class="title" style="margin: 0 50px; display: inline-block;"><?php echo "{$group->name} {$model->name}" ?></h1>
+</div>
 
 <div class="image-area">
     <div class="image-tab active" id="image-tab-1">
         <div class="main-image-area">
             <div class="imageArea-menu">
                 <div class="imageArea-info-label">
-                    <img class="eye_open" src="https://acat.online/catalog-images/eye_open.png">
-                    <img class="eye_close"
-                         src="https://acat.online/catalog-images/eye_close.png">
+                    <img class="eye_open" src="https://acat.online/catalog-images/eye_open.png" alt="hide labels">
+                    <img class="eye_close" src="https://acat.online/catalog-images/eye_close.png" alt="show labels">
                 </div>
                 <span class="imageArea-info-plus">+</span>
                 <span class="imageArea-info-minus">-</span>
                 <span class="imageArea-info-stretch">
-                    <img src="https://acat.online/catalog-images/arrows.png">
+                    <img src="https://acat.online/catalog-images/arrows.png" alt="arrows">
                 </span>
-                <div class="imageArea-info-icon"><img
-                        src="https://acat.online/catalog-images/info.png">
+                <div class="imageArea-info-icon">
+                    <img src="https://acat.online/catalog-images/info.png" alt="info">
                     <div class="imageArea-info">
                         <div class="info-block">
                             <span class="image">
@@ -360,23 +341,16 @@ foreach ($numbers as $item) {
             </div>
             <div class="main-image imageArea" id="imageArea">
                 <span class="imageLayout" id="imageLayout">
-                    <img src="<?php echo $image ?>">
+                    <img src="<?php echo $image?>" alt="Схема">
                     <?php if (count($labels) > 0) { ?>
-                        <?php foreach ($labels as $coordinate) { ?>
+                        <?php foreach ($labels as $label) { ?>
                             <span class="ladel"
-                                  data-left="<?php echo $coordinate->topX ?>"
-                                  data-top="<?php echo $coordinate->topY ?>"
-                                  title="<?php echo $coordinate->title ?>"
-                                  data-index="<?php echo $coordinate->index ?>"
-                                  style="position:absolute; padding:1px 5px;
-                                      left: <?php echo $coordinate->topX ?>px;
-                                      top: <?php echo $coordinate->topY ?>px;
-                                      min-width: <?php echo $coordinate->bottomX - $coordinate->topX ?>px;
-                                      min-height: <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                      line-height:  <?php echo $coordinate->bottomY - $coordinate->topY ?>px;
-                                      font-size:  <?php echo $coordinate->bottomY - $coordinate->topY - 2 ?>px;"
-                            >
-                            </span>
+                                  data-left="<?php echo $label->coordinate->top->x ?>"
+                                  data-top="<?php echo $label->coordinate->top->y ?>"
+                                  title="<?php echo $label->name ? ($label->id ? $label->id.' - ': '').$label->name : $label->id ?>"
+                                  data-index="<?php echo $label->id ?>"
+                                  style="top: <?php echo $label->coordinate->top->y ?>px; left: <?php echo $label->coordinate->top->x ?>px; width: <?php echo $label->coordinate->width ?>px; height: <?php echo $label->coordinate->height ?>px;"
+                            ></span>
                         <?php } ?>
                     <?php } ?>
                 </span>
@@ -387,71 +361,37 @@ foreach ($numbers as $item) {
 
 <table class="table imageArea-related active">
     <thead class="table-head">
-    <tr class="table-row bottom-line a2s-numbers_header">
-        <td class="table-cell">№</td>
-        <td class="table-cell">&nbsp;</td>
-        <td class="table-cell">Номер</td>
-        <td class="table-cell">Описание</td>
-    </tr>
+        <tr class="table-row bottom-line a2s-numbers_header">
+            <td class="table-cell">№</td>
+            <td class="table-cell">&nbsp;</td>
+            <td class="table-cell">Номер</td>
+            <td class="table-cell">Наименование</td>
+        </tr>
     </thead>
     <tbody class="table-body">
-    <?php foreach ($numbers as $index => $number) { ?>
-        <tr class="table-row bottom-line to-image" data-index='<?php echo ($number->label ? $number->label : ($number->number ? $number->number : $number->name)) ?>'>
-            <td class="table-cell"><?php echo $number->label ?></td>
-            <?php if ($number->number_type == 'NUMBER') { ?>
-                <td class="table-cell number-info-cell" data-number-info="<?php echo $index ?>">
-                    <input id='input<?php echo $index ?>' type="checkbox">
-                    <label for='input<?php echo $index ?>'></label>
-                    <div class="modal-number-info">
-                        <span class="modal-number-info-close"></span>
-                        <div class="number-info">
-                            <div class="number-info-params"><?php echo "Автомобиль: {$breadcrumbs[2]->name} {$breadcrumbs[4]->name}" ?></div>
-                            <?php if (property_exists($number, 'from_date') || property_exists($number, 'from_date')) { ?>
-                                <div class="number-info-params">Дата пр-ва:<?php 
-                                        echo substr($number->from_date, 8, 2).'.'.substr($number->from_date, 5, 2).'.'.substr($number->from_date, 0, 4);
-                                        if (property_exists($number,'to_date')) echo ' - ';
-                                        if (property_exists($number,'to_date')) echo (!$number->to_date ? 'по н.в.' : substr($number->to_date, 8, 2).'.'.substr($number->to_date, 5, 2).'.'.substr($number->to_date, 0, 4)); ?>
-                                </div>
-                            <?php } ?>
-                            <?php if (property_exists($number, 'modification')) { ?>
-                                <div class="number-info-params">Модификации: <?php echo $number->modification ?></div>
-                            <?php } ?>
-                            <?php if (property_exists($number, 'description')) { ?>
-                                <?php foreach ($number->description as $description) { ?>
-                                    <?php if (property_exists($description, 'name')) { ?>
-                                        <div class="number-info-params"><?php echo "{$description->name}: {$description->value}" ?></div>
-                                    <?php } ?>
-                                <?php } ?>
-                            <?php } ?>
-                            <?php if (property_exists($number, 'options') && count($number->options)>0) { ?>
-                                <div class="number-info-params">
-                                    <p>Опции: </p>
-                                    <div class="numbers_count">
-                                        <?php foreach ($number->options as $option) { ?>
-                                            <p><?php echo $option ?></p>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                            <?php if (property_exists($number, 'color') && property_exists($number->color, 'name')) { ?>
-                                <div class="number-info-params"><?php echo "Цвет: {$number->color->name} - {$number->color->value}" ?></div>
-                            <?php } ?>
-                            <?php if (property_exists($number, 'count')) { ?>
-                                <div class="number-info-count"><?php echo "Количество: {$number->count}" ?></div>
-                            <?php } ?>
-                        </div>
+    <?php foreach ($numbers as $i => $number) { ?>
+        <tr class="table-row bottom-line to-image" data-index="<?php echo $number->id ?>">
+            <td class="table-cell"><?php echo $number->labelId != $number->number ? $number->labelId : '' ?></td>
+            <td class="table-cell number-info-cell" data-number-info="<?php echo $i?>">
+                <?php if ($number->description) { ?>
+                <input id='input' type="checkbox">
+                <label for='input'></label>
+                <div class="modal-number-info">
+                    <span class="modal-number-info-close"></span>
+                    <div class="number-info">
+                        <div class="number-info-params"><?php echo str_replace("\n", "<br>", $number->description); ?></div>
                     </div>
-                </td>
-                <td class="table-cell"><?php echo $number->number ?></td>
-                <td class="table-cell"><?php echo $number->name ?></td>
-            <?php } else { ?>
-                <td class="table-cell">
-                    <img src="<?php echo $number->image ?>" onError="this.src='https://acat.online/catalog-images/avtodiler.png'">
-                </td>
-                <td class="table-cell"><a href='<?php echo "/{$hrefPrefix}{$number->type}/{$number->mark}/{$number->country_short}/{$number->family}/{$number->model}/{$number->modification}/{$number->group}/{$number->subgroup}" ?>'><?php echo "{$number->group_name}/{$number->subgroup_name}" ?></a></td>
-                <td class="table-cell"></td>
-                <td class="table-cell"></td>
-            <?php } ?>
+                </div>
+                <?php } ?>
+            </td>
+            <td class="table-cell"><?php echo $number->number ?></td>
+            <td class="table-cell">
+                <?php if ($number->groupId) { ?>
+                    <a href="./<?php echo $number->groupId?>"><?php echo $number->name ?></a>
+                <?php } else { ?>
+                    <span><?php echo $number->name ?></span>
+                <?php } ?>
+            </td>
         </tr>
     <?php } ?>
     </tbody>

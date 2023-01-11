@@ -10,7 +10,8 @@ return [
             'host' => 'https://acat.online/api',   // Адрес АПИ сервиса
             'token' => '',                          // УКАЖИТЕ ВАШ ТОКЕН ВНУТРИ КОВЫЧЕК
             // Если каталог доступен например с "http://MouCauT.com/catalogs" то в ковычках будет 'catalogs'
-            'urlBeforeCatalog' => ''
+            'urlBeforeCatalog' => '',
+            'lang' => 'ru', // Работает у иномарок. Поддерживаемые языки: ru, en, de, bg, fr, es, he
         ],
         'logger' => [
             'name' => 'slim-app',

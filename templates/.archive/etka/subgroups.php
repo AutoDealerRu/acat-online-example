@@ -18,7 +18,7 @@
                         <?php if ($item->image) { ?>
                             <img src="<?php echo $item->image ?>">
                         <?php } else { ?>
-                            <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
+                            <img src="https://acat.online/catalog-images/avtodiler.png">
                         <?php } ?>
                     </div>
                     <div class="catalog--mark_description">

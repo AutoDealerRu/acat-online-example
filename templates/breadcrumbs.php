@@ -1,24 +1,20 @@
-<?php if ($breadcrumbs) { ?>
+<?php if (isset($type) || isset($mark) || isset($model) || isset($modification) || isset($group)) { ?>
     <div class="breadcrumbs">
-    <?php foreach ($breadcrumbs as $index => $breadcrumb) {
-        if ($index != (count($breadcrumbs)-1)) {
-            if ($index > 0) {
-                $breadcrumbUrl = "{$hrefPrefix}/";
-                $i = 1;
-                while ($i < ($index+1)) {
-                    $breadcrumbUrl .= $breadcrumbs[$i]->url."/";
-                    $i++;
-                }
-                $breadcrumbUrl = preg_replace("/\/$/", "", $breadcrumbUrl);
-                $breadcrumbUrl = preg_replace("/^\/\//", "/", $breadcrumbUrl); ?>
-                <a href="<?php echo $breadcrumbUrl ?>"><?php echo $breadcrumb->name ?></a>
-            <?php } else {
-                $breadcrumbUrl = "{$hrefPrefix}/" . preg_replace("/^\//", "", $breadcrumb->url); ?>
-                <a href="<?php echo $breadcrumbUrl ?>"><?php echo $breadcrumb->name ?></a>
-            <?php }
-        } else { ?>
-            <span class="breadcrumbs_current"><?php echo $breadcrumb->name ?></span>
-        <?php }
-    } ?>
+        <a href="<?php echo $hrefPrefix ? $hrefPrefix : '/' ?>">Каталог</a>
+    <?php if (isset($type)) { ?>
+        <a href="<?php echo $hrefPrefix.'/'.$type->id ?>"><?php echo $type->name ?></a>
+    <?php } ?>
+    <?php if (isset($mark)) { ?>
+        <a href="<?php echo $hrefPrefix.'/'.$type->id.'/'.$mark->id ?>"><?php echo $mark->name ?></a>
+    <?php } ?>
+    <?php if (isset($model)) { ?>
+        <a href="<?php echo $hrefPrefix.'/'.$type->id.'/'.$mark->id.'/'.$model->id.(!$model->hasModifications ? '/null' : '') ?>"><?php echo $model->name ?></a>
+    <?php } ?>
+    <?php if (isset($modification)) { ?>
+        <a href="<?php echo $hrefPrefix.'/'.$type->id.'/'.$mark->id.'/'.$model->id.'/'.$modification->id ?>"><?php echo $modification->name ?></a>
+    <?php } ?>
+    <?php if (isset($group)) { ?>
+        <a href="<?php echo $hrefPrefix.'/'.$type->id.'/'.$mark->id.'/'.$model->id.'/'.(!$model->hasModifications ? 'null' : $modification->id).'/'.$group->parentId.'/'.$group->id ?>"><?php echo $group->name ?></a>
+    <?php } ?>
     </div>
 <?php } ?>

@@ -13,7 +13,7 @@
     <a href='<?php echo "/{$hrefPrefix}{$group->type}/{$group->mark}/{$group->country_short}/{$group->family}/{$group->model}/{$group->modification}/{$group->group}" ?>'>
         <span class="fiat_unit">
             <div class="fiat_units_image">
-                <img src="<?php echo $group->image ?>" onerror="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
+                <img src="<?php echo $group->image ?>" onerror="this.src='https://acat.online/catalog-images/avtodiler.png'">
             </div>
             <div class="fiat_units_name"><?php echo $group->name ?></div>
         </span>

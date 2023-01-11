@@ -294,9 +294,9 @@ $title = $breadcrumbs[6]->name;
         <tr class="table-row bottom-line to-image" data-index="<?php echo $ind ?>">
             <td class="table-cell img-cell">
                 <?php if (property_exists($item, 'img')) { ?>
-                    <img src="<?php echo $item->img ?>" onError="this.src='https://storage.yandexcloud.net/acat/public/images/avtodiler.png'">
+                    <img src="<?php echo $item->img ?>" onError="this.src='https://acat.online/catalog-images/avtodiler.png'">
                 <?php } else { ?>
-                    <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
+                    <img src="https://acat.online/catalog-images/avtodiler.png">
                 <?php } ?>
             </td>
             <td class="table-cell number-info-cell">

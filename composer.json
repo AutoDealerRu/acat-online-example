@@ -16,10 +16,11 @@
         "slim/slim": "^3.1",
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
-        "guzzlehttp/guzzle": "~6.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "ext-json": "*"
     },
     "scripts": {
-        "dev": "php -S 0.0.0.0:8081 -t public public/index.php",
+        "dev": "php -S 0.0.0.0:8081 -t public index.php",
         "start": "php -S 0.0.0.0:80 -t public public/index.php",
         "test": "phpunit"
     },

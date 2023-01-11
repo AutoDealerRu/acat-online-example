@@ -34,7 +34,6 @@
     <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' '>
     <label class="form__label" for='search_vim'>Поиск по VIN, кузову, марке или модели</label>
     <input class="button button--green" type='submit' value="Найти">
-    <input type='hidden' name='redirect' value='1'>
 </form>
 
 <?php if ($error && strlen($error) > 0) { ?>
@@ -43,9 +42,12 @@
     <ul class="main_catalog">
         <li class="main_catalog--types">
             <?php foreach ($types as $k => $type) { ?>
-                <div class="main_catalog--type <?php echo $k === 0 ? 'on' : ''?>" data-type="<?php echo $type->value?>">
+                <div class="main_catalog--type <?php echo ($activeType && $type->id === $activeType) || (!$activeType && $k === 0) ? 'on' : ''?>" data-type="<?php echo $type->id?>">
                     <div class="main_catalog--type_name">
                         <div class="main_catalog--type_title">
+                            <?php if ($type->image) { ?>
+                                <img src="<?php echo $type->image ?>" alt="<?php echo $type->name ?>">
+                            <?php } ?>
                             <span><?php echo $type->name?></span>
                         </div>
                     </div>
@@ -54,10 +56,10 @@
         </li>
         <li class="main_catalog--marks_all">
             <?php foreach ($types as $k => $type) { ?>
-                <div class="main_catalog--marks <?php echo $k === 0 ? 'on' : '' ?>">
+                <div class="main_catalog--marks <?php echo ($activeType && $type->id === $activeType) || (!$activeType && $k === 0) ? 'on' : '' ?>">
                     <div class="marks-inline">
                         <?php foreach ($type->marks as $mark) {?>
-                            <a href="<?php echo $hrefPrefix . $type->value . '/' . $mark->value ?>">
+                            <a href="<?php echo $hrefPrefix . $type->id . '/' . $mark->id ?>">
                             <span class="main_catalog--mark">
                                 <?php if ($mark->vin) {?>
                                     <div class="mark-vin" title="Можно искать по VIN">

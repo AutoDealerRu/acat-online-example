@@ -21,7 +21,7 @@
                 <?php if ($model->image) { ?>
                     <img src="<?php echo $model->image ?>">
                 <?php } else { ?>
-                    <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
+                    <img src="https://acat.online/catalog-images/avtodiler.png">
                 <?php } ?>
             </div>
             <div class="catalog--mark_name"><?php echo $model->full_name ?></div>

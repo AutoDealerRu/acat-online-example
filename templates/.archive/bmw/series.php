@@ -21,7 +21,7 @@
                 <?php if ($seria->image) { ?>
                     <img src="<?php echo $seria->image ?>">
                 <?php } else { ?>
-                    <img src="https://storage.yandexcloud.net/acat/public/images/avtodiler.png">
+                    <img src="https://acat.online/catalog-images/avtodiler.png">
                 <?php } ?>
             </div>
             <div class="tile-block-name" style="min-height: 75px;"><?php echo $seria->name ?></div>
