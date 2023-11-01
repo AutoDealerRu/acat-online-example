@@ -44,9 +44,13 @@ $app->get('/parts-search', function (Request $request, Response $response) use (
         setcookie('acat_api_token', '', time()-60*60*24, '/');
         return $this->renderer->render($response, 'auth.php', ['error' => $errorText]);
     }
-    $renderData['totalCount'] = $data->itemsCount;
+    $page = $queryParams['page'] ? $queryParams['page'] : 1;
+    $renderData['totalCount'] = $data->itemsCount ? $data->itemsCount : 0;
+    $renderData['page'] = $page;
+    $renderData['hasNextPage'] = ((int) $page + 1) * 25 < $renderData['totalCount'];
     $renderData['numbers'] = $data->items;
     $renderData['hrefPrefix'] = $settings->urlBeforeCatalog;
+    $renderData['qp'] = $request->getQueryParams();
 
     return $this->renderer->render($response, 'parts-search.php', $renderData);
 });
