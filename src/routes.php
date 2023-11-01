@@ -38,13 +38,14 @@ $app->get('/parts-search', function (Request $request, Response $response) use (
 
     $queryParams = array_merge($request->getQueryParams(), ['lang' => $settings->lang]);
     $renderData = [];
-    $data = Helper::getData($settings, false, '/searchParts', $queryParams);
+    $data = Helper::getData($settings, false, '/searchParts2', $queryParams);
 
     if ($data instanceof stdClass && property_exists($data, 'status') && $data->code === 401) {
         setcookie('acat_api_token', '', time()-60*60*24, '/');
         return $this->renderer->render($response, 'auth.php', ['error' => $errorText]);
     }
-    $renderData['numbers'] = $data;
+    $renderData['totalCount'] = $data->itemsCount;
+    $renderData['numbers'] = $data->items;
     $renderData['hrefPrefix'] = $settings->urlBeforeCatalog;
 
     return $this->renderer->render($response, 'parts-search.php', $renderData);

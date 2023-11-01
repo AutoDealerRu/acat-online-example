@@ -11,7 +11,16 @@
     <tr class="table-row bottom-line">
         <td class="table-cell">Номер</td>
         <td class="table-cell">Название</td>
-        <td class="table-cell">Описание</td>
+        <td class="table-cell">
+            <div style="display: flex; justify-content: space-between">
+                <div>Описание</div>
+                <?php if ($totalCount) { ?>
+                    <div style="text-transform: initial;">
+                        <div>Всего: <?php echo $totalCount?></div>
+                    </div>
+                <?php } ?>
+            </div>
+        </td>
     </tr>
     </thead>
     <tbody class="table-body">
