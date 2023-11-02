@@ -33,8 +33,8 @@
             <p>Поиск по VIN/кузову: марки Abarth, Alfa-Romeo, Fiat, Lancia, Audi, Skoda, Seat, Volkswagen, Bmw, Mini, Rolls-Royce, Kia, Hyundai, Nissan, Infinity, Toyota, Lexus</p>
         </div>
     </div>
-    <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' ' value="<?php echo isset($searchValue) ? $searchValue : '' ?>">
-    <label class="form__label" for='search_vim'>Поиск по VIN, кузову, марке или модели</label>
+    <input required class="search_vin" id="search_vin" type='text' name='text' placeholder=' ' value="<?php echo isset($searchValue) ? $searchValue : '' ?>">
+    <label class="form__label" for='search_vin'>Поиск по VIN, кузову, марке или модели</label>
     <input class="button button--green" type='submit' value="Найти">
 </form>
 <?php if (isset($error) && $error) { ?>

@@ -22,8 +22,8 @@
         <?php } ?>
     </div>
     <form class="catalog_search" method='POST' action='/' style="width: 440px; margin: 0 auto;">
-        <input required class="search_vim" id="search_vim" type='text' name='token' placeholder=' ' style="padding-left: 4px;">
-        <label class="form__label" for='search_vim'>ваш API token</label>
+        <input required class="search_vin" id="search_vin" type='text' name='token' placeholder=' ' style="padding-left: 4px;">
+        <label class="form__label" for='search_vin'>ваш API token</label>
         <input class="button button--green" type='submit' value="Отправить" style="padding: 0 7px; margin-left: 8px;">
     </form>
 </body>

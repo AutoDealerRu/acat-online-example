@@ -20,21 +20,32 @@
 <svg style="display: none;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <symbol id="icon-vin" viewBox="0 0 404.308 404.309"><path d="M 404.31868,285.87875 118.42975,-0.01017852 l 285.88752,0.006 10e-4,285.88326852 z"></path></symbol>
 </svg>
-<form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}search" ?>'>
-    <input class="hidden" id='search-info' type="checkbox">
-    <label class="search-info-icon" for='search-info'>i</label>
-    <div class="search-info modal-number-info">
-        <span class="modal-vin-info-close"></span>
-        <div class="number-info">
-            <p>Поиск по марке: цифры, латиница/кириллица. Поиск иномарок на кириллице (бмв, хендай и др.)</p>
-            <p>Поиск по модели: цифры, латиница/кириллица</p>
-            <p>Поиск по VIN/кузову: марки Abarth, Alfa-Romeo, Fiat, Lancia, Audi, Skoda, Seat, Volkswagen, Bmw, Mini, Rolls-Royce, Kia, Hyundai, Nissan, Infinity, Toyota, Lexus</p>
+<div style="display: flex">
+    <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}search" ?>'>
+        <input class="hidden" id='search-info' type="checkbox">
+        <label class="search-info-icon" for='search-info'>i</label>
+        <div class="search-info modal-number-info">
+            <span class="modal-vin-info-close"></span>
+            <div class="number-info">
+                <p>Поиск по марке: цифры, латиница/кириллица. Поиск иномарок на кириллице (бмв, хендай и др.)</p>
+                <p>Поиск по модели: цифры, латиница/кириллица</p>
+                <p>Поиск по VIN/кузову: марки Alfa Romeo, Audi, BMW, Chevrolet, Chrysler, Citroen, DAF, Dacia, Dodge, Fiat, Ford, Honda, Hyundai, Hyundai Корея, IVECO, Infiniti, Isuzu, Jeep, Kia, Kia Корея, Lexus, Man, Mazda, Mercedes Benz, Mini, Mitsubishi, Nissan, Opel, Peugeot, Plymouth, Porsche, Renault, Rolls-Royce, Saab, Scania, Seat, Skoda, Smart, Ssang Yong, Subaru, Suzuki, Toyota, Vauxhall, Volkswagen, Volvo</p>
+                <p>Пример Skoda Octavia (<a href="<?php echo "/{$hrefPrefix}search?text=XW8AN2NE3JH035743"?>">XW8AN2NE3JH035743</a>)</p>
+                <p>Пример Toyota 4Runner/Hilux (<a href="<?php echo "/{$hrefPrefix}search?text=KZN185-9023353"?>">KZN185-9023353</a>)</p>
+            </div>
         </div>
-    </div>
-    <input required class="search_vim" id="search_vim" type='text' name='text' placeholder=' '>
-    <label class="form__label" for='search_vim'>Поиск по VIN, кузову, марке или модели</label>
-    <input class="button button--green" type='submit' value="Найти">
-</form>
+        <input required class="search_vin" id="search_vin" type='text' name='text' placeholder=' ' style="min-width: 320px">
+        <label class="form__label" for='search_vin'>Поиск по VIN, кузову, марке или модели</label>
+        <input class="button button--green" type='submit' value="Найти" style="margin-left: 16px">
+    </form>
+    <?php if ($displayPartsSearchOnMainPage) { ?>
+        <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}parts-search" ?>' style="margin-left: 48px;">
+            <input required class="search_vin" id="search_parts" type='text' name='search' placeholder=' '>
+            <label class="form__label" for='search_parts'>Поиск по номеру/названию детали</label>
+            <input class="button button--green" type='submit' value="Найти" style="margin-left: 16px">
+        </form>
+    <?php }?>
+</div>
 
 <?php if ($error && strlen($error) > 0) { ?>
     <h1 style="color: red;"><?php echo $error ?></h1>

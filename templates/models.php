@@ -11,8 +11,8 @@
 <form class="catalog_search" method='GET' action='<?php echo "$hrefPrefix/parts-search" ?>'>
     <input type="hidden" name="type" value="<?php echo $type->id ?>">
     <input type="hidden" name="mark" value="<?php echo $mark->id ?>">
-    <input required class="search_vim" id="number" type='text' name='search' placeholder=' ' style="width: 50%;">
-    <label class="form__label" for='search_vim'>Поиск по номеру (артикулу) или названию</label>
+    <input required class="search_vin" id="number" type='text' name='search' placeholder=' ' style="width: 50%;">
+    <label class="form__label" for='search_vin'>Поиск по номеру (артикулу) или названию</label>
     <input class="button button--green" type='submit' value="Найти">
 </form>
 <?php } foreach ($models as $k => $model) { ?>

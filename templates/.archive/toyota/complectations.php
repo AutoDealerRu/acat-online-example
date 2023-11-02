@@ -9,10 +9,10 @@
 <?php require __DIR__ . '/../breadcrumbs.php'; ?>
 
     <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
-        <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
+        <input required class="search_vin" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
         <input type='hidden' name='country' value="<?php echo $breadcrumbs[3]->url ?>">
         <input type='hidden' name='model' value="<?php echo $breadcrumbs[4]->url ?>">
-        <label class="form__label" for='search_vim'>Поиск по номеру (артикулу) детали</label>
+        <label class="form__label" for='search_vin'>Поиск по номеру (артикулу) детали</label>
         <input class="button button--green" type='submit' value="Найти">
     </form>
 

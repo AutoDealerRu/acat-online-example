@@ -8,8 +8,8 @@
 <body>
 <?php require __DIR__ . '/../breadcrumbs.php'; ?>
 <form class="catalog_search" method='GET' action='<?php echo "/{$hrefPrefix}{$breadcrumbs[1]->url}/{$breadcrumbs[2]->url}/search" ?>'>
-    <input required class="search_vim" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
-    <label class="form__label" for='search_vim'>Поиск по номеру (артикулу)</label>
+    <input required class="search_vin" id="number" type='text' name='number' placeholder=' ' style="width: 50%;">
+    <label class="form__label" for='search_vin'>Поиск по номеру (артикулу)</label>
     <input class="button button--green" type='submit' value="Найти">
 </form>
 <?php if (!$isSKD) { foreach ($models as $k => $model) {?>

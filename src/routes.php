@@ -116,6 +116,7 @@ $app->get('/[{type}]', function (Request $request, Response $response, array $ar
 
     return $this->renderer->render($response, 'index.php', [
         'hrefPrefix' => $settings->urlBeforeCatalog,
+        'displayPartsSearchOnMainPage' => $settings->displayPartsSearchOnMainPage,
         'types' => $types,
         'activeType' => $args['type'] ?: null,
         'error' => $error
