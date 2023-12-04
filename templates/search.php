@@ -107,7 +107,7 @@
         </thead>
         <tbody class="table-body">
         <?php foreach ($vins as $index => $vin) {
-            $url = "{$hrefPrefix}/{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria=$vin->criteriaURI"; ?>
+            $url = "{$hrefPrefix}/{$vin->type}/{$vin->mark}/{$vin->model}/{$vin->modification}?criteria64=$vin->criteria64"; ?>
             <tr class="table-row">
                 <td class="table-cell">
                     <a href="<?php echo $url?>"><?php echo $vin->modelName ?></a>

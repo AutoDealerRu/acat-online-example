@@ -76,7 +76,7 @@ $app->get('/search', function (Request $request, Response $response) use ($error
     }
     if ((array_key_exists('vins', $data) && is_array($data['vins']) && count($data['vins']) === 1)) {
         $vin = $data['vins'][0];
-        $url = $settings->urlBeforeCatalog . "/$vin->type/$vin->mark/$vin->model/$vin->modification?criteria=$vin->criteriaURI";
+        $url = $settings->urlBeforeCatalog . "/$vin->type/$vin->mark/$vin->model/$vin->modification?criteria64=$vin->criteria64";
         return $response->withRedirect($url, 302);
     }
 
@@ -186,8 +186,8 @@ $app->get('/{type}/{mark}/{model}/{modification}[/{group}]', function (Request $
     $settings = Helper::getJSON($settings);
 
     $queryParams = array_merge($args, ['lang' => $settings->lang]);
-    if ($request->getQueryParam('criteria')) {
-        $queryParams['criteria'] = $request->getQueryParam('criteria');
+    if ($request->getQueryParam('criteria64')) {
+        $queryParams['criteria64'] = $request->getQueryParam('criteria64');
     }
 
     $data = Helper::getData($settings, true, '/groups', $queryParams);
@@ -201,9 +201,7 @@ $app->get('/{type}/{mark}/{model}/{modification}[/{group}]', function (Request $
         );
     }
     $data['hrefPrefix'] = $settings->urlBeforeCatalog;
-    if ($request->getQueryParam('criteria')) {
-        $data['criteria'] = $request->getQueryParam('criteria');
-    }
+    if ($request->getQueryParam('criteria64')) $data['criteria64'] = $request->getQueryParam('criteria64');
     if (count($data['groups'][0]->subGroups) > 0) {
         return $this->renderer->render($response, 'groups_loaded.php', $data);
     } else {
@@ -219,8 +217,8 @@ $app->get('/{type}/{mark}/{model}/{modification}/{parentGroup}/{group}', functio
     $settings = Helper::getJSON($settings);
 
     $queryParams = array_merge($args, ['lang' => $settings->lang]);
-    if ($request->getQueryParam('criteria')) {
-        $queryParams['criteria'] = $request->getQueryParam('criteria');
+    if ($request->getQueryParam('criteria64')) {
+        $queryParams['criteria64'] = $request->getQueryParam('criteria64');
     }
     $data = Helper::getData($settings, true, '/parts', $queryParams);
 
@@ -233,9 +231,7 @@ $app->get('/{type}/{mark}/{model}/{modification}/{parentGroup}/{group}', functio
         );
     }
     $data['hrefPrefix'] = $settings->urlBeforeCatalog;
-    if ($request->getQueryParam('criteria')) {
-        $data['criteria'] = $request->getQueryParam('criteria');
-    }
+    if ($request->getQueryParam('criteria64')) $data['criteria64'] = $request->getQueryParam('criteria64');
     $data['image'] = $settings->urlBeforeCatalog.'/'.join('/', $args).'/scheme';
 
     return $this->renderer->render($response, 'numbers.php', $data);

@@ -82,7 +82,7 @@
         } else if ($gr->hasParts) {
             $url .= "/{$gr->parentId}/{$gr->id}";
         }
-        if ($criteria) $url .= '?criteria='.urlencode($criteria);
+        if ($criteria64) $url .= '?criteria64='.$criteria64;
         ?>
         <div class="fiat_units-block">
             <a href="<?php echo $url ?>">
