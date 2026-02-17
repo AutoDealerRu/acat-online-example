@@ -74,11 +74,6 @@ $app->get('/search', function (Request $request, Response $response) use ($error
     if (isset($data) && is_array($data) && array_key_exists('error', $data)) {
         return $this->renderer->render($response, 'search/index.php', $data);
     }
-    if ((array_key_exists('vins', $data) && is_array($data['vins']) && count($data['vins']) === 1)) {
-        $vin = $data['vins'][0];
-        $url = $settings->urlBeforeCatalog . "/$vin->type/$vin->mark/$vin->model/$vin->modification?criteria64=$vin->criteria64";
-        return $response->withRedirect($url, 302);
-    }
 
     return $this->renderer->render($response, 'search.php', $data);
 });

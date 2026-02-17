@@ -1,5 +1,5 @@
 {
-    "name": "ACAT Online API",
+    "name": "acat.online/api",
     "description": "Сайт-пример для реализации API доступа",
     "keywords": ["acat.online", "api.acat.online"],
     "homepage": "https://acat.online",
@@ -23,9 +23,6 @@
         "dev": "php -S 0.0.0.0:8081 -t public index.php",
         "start": "php -S 0.0.0.0:80 -t public public/index.php",
         "test": "phpunit"
-    },
-    "require-dev": {
-        "phpunit/phpunit": ">=4.8 < 6.0"
     },
     "config": {
         "process-timeout" : 0

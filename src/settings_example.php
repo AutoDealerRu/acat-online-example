@@ -7,13 +7,13 @@ return [
             'template_path' => __DIR__ . '/../templates/',
         ],
         'api' => [
-            'host' => 'https://acat.online/api',   // Адрес АПИ сервиса
-            'token' => '',                          // УКАЖИТЕ ВАШ ТОКЕН ВНУТРИ КОВЫЧЕК
-            // Если каталог доступен например с "http://MouCauT.com/catalogs" то в ковычках будет 'catalogs'
+            'host' => 'https://acat.online/api2/catalogs',   // Адрес АПИ сервиса
+            'token' => '', // УКАЖИТЕ ВАШ ТОКЕН ВНУТРИ КОВЫЧЕК
+            // Если каталог доступен например с "http://mysite.com/catalogs" то в ковычках будет 'catalogs'
             'urlBeforeCatalog' => '',
             'lang' => 'ru', // Работает у иномарок. Поддерживаемые языки: ru, en, de, bg, fr, es, he
             // поиск работает только по тем маркам, у кого searchParts = true
-            'displayPartsSearchOnMainPage' => false, // Показывать поиск по названию/номеру детали на главной странице
+            'displayPartsSearchOnMainPage' => true, // Показывать поиск по названию/номеру детали на главной странице
         ],
         'logger' => [
             'name' => 'slim-app',

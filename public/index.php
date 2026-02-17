@@ -1,6 +1,6 @@
 <?php
 use Slim\App;
-
+error_reporting(0); // вывод ошибок
 if (PHP_SAPI == 'cli-server') {
     $url  = parse_url($_SERVER['REQUEST_URI']);
     $file = __DIR__ . $url['path'];
